@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="Evolução do Infotipo">
+		<content>
+			<VBox class="sapUiResponsiveMargin">
+				<RadioButtonGroup id="rbg" columns="2" valueState="None" class="sapUiMediumMarginBottom" select="onSelect">
+					<RadioButton id="manter_req" text="Manter"/>
+					<RadioButton id="evoluir_req" text="Evoluir"/>
+				</RadioButtonGroup>
+				<f:SimpleForm id="DataEfetiva" editable="false" layout="ResponsiveGridLayout" title="Data Efetivação"
+					labelSpanL="4" labelSpanM="1" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+					<!--Type Requisition-->
+					<DatePicker required="true" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" placeholder="dd/mm/aaaa" class="sapUiTinyMarginTop" change="handleChange" id="data">
+						<layoutData>
+							<l:GridData span="L3 M3 S12"/>
+						</layoutData>
+					</DatePicker>
+				</f:SimpleForm>	
+				</VBox>
+			</content>
+			<endButton>
+				<Button text="Continuar" press="onContinue"/>
+			</endButton>
+		</Dialog>
+	</core:FragmentDefinition>

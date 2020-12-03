@@ -1,0 +1,12 @@
+<mvc:View controllerName="autoServico.view.Welcome" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout">
+	<Page enableScrolling="false">
+		<content>
+			
+		</content>
+		<footer>
+			<Toolbar></Toolbar>
+		</footer>
+		<content></content>
+	</Page>
+</mvc:View>

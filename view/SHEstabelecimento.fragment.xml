@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<SelectDialog
+		title="Estabelecimento"
+		class="sapUiPopupWithPadding"
+		items="{ET_SH_EDUC_ESTABEL>/}"
+		search="_handleValueHelpSearch"
+		confirm="_handleValueHelpClose"
+		cancel="_handleValueHelpClose"
+	    app:description="STEXT"
+		app:lblText="txtEstabelecimento"
+		app:input="slEstabelecimento"
+		app:getParam="Title">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+			title="{ET_SH_EDUC_ESTABEL>SLART}"
+			description="{ET_SH_EDUC_ESTABEL>STEXT}" />
+	</SelectDialog> 
+</core:FragmentDefinition>

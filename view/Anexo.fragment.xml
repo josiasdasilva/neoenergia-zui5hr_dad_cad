@@ -1,0 +1,65 @@
+<core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<m:Dialog title="Anexos - Selecione os anexos correspondentes as alterações realizadas" contentWidth="1000px" contentHeight="300px">
+		 <!--contentWidth="700px" contentHeight="300px"-->
+		<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title=""  columnsL="1" columnsM="1">
+		<m:Text text="Termo Assinado.">
+			<m:layoutData>
+				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+			</m:layoutData>
+		</m:Text>
+		<m:Text text="Tamanho máximo do arquivo 1MB.">
+			<m:layoutData>
+				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+			</m:layoutData>
+		</m:Text>
+		<m:Text text="Tipos de arquivos aceitos .jpeg, .jpg, .pdf, .doc, .docx.">
+			<m:layoutData>
+				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+			</m:layoutData>
+		</m:Text>
+		
+		</f:SimpleForm>
+		<Table id="tAnexos" rows="{Attachments>/table}" selectionMode="None" visibleRowCount="20" paste="onPaste" ariaLabelledBy="title">
+			<extension>
+				<m:OverflowToolbar id="eToolbar" visible="false">
+					<m:ToolbarSpacer/>
+					<m:Button id="addAtt" icon="sap-icon://add-document" text="Adicionar" tooltip="{i18n>adicionar_registros}" press="onAdd"/>
+					<!--<m:Button id="delAtt" icon="sap-icon://decline" text="Excluir" tooltip="{i18n>eliminar_registros}" press="onDelete"/>-->
+				</m:OverflowToolbar>
+			</extension>
+			<columns>
+				<Column>
+					<m:Label text="{i18n>tipo_anexo}"/>
+					<template>
+						<m:Select id="slTipoAnexo" items="{ path: 'Attachments>DMS_FIELDS' }" selectedKey="{Attachments>TipoAnexo}" enabled="{Attachments>New}"
+							change="onAnexoChange">
+							<core:Item key="{Attachments>id}" text="{Attachments>Name}"/>
+						</m:Select>
+					</template>
+				</Column>
+				<Column>
+					<m:Label text="{i18n>anexo}"/>
+					<template>
+						<m:FlexBox>
+							<u:FileUploader id="fileUploader" change="onChangeAnexo" name="myFileUpload" useMultipart="false"
+								tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" visible="{Attachments>New}" maximumFileSize="1"
+								fileSizeExceed="fileSizeExceed"/>
+							<m:Button icon="sap-icon://attachment" press="onOpenAttachment" ariaLabelledBy="actionButtonLabel" visible="{Attachments>Old}"/>
+						</m:FlexBox>
+					</template>
+				</Column>
+				<Column>
+					<m:Label text="{i18n>acao}"/>
+					<template>
+						<m:Button icon="sap-icon://edit" press="onEditAttachment" ariaLabelledBy="actionButtonLabel" enabled="{Attachments>statusCampos}"/>
+						<!--<m:Button icon="sap-icon://delete" press="onDeleteAttachment" ariaLabelledBy="actionButtonLabel"/>-->
+					</template>
+				</Column>
+			</columns>
+		</Table>
+		
+		<m:buttons>
+			<m:Button text="OK" press="close"/>
+		</m:buttons>
+	</m:Dialog>
+</core:FragmentDefinition>

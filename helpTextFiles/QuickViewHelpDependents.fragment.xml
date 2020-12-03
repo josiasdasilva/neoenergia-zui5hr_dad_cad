@@ -1,0 +1,356 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Dependentes">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="Após o preenchimento dos campos da atualização cadastral, será necessário anexar documento comprobatório:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Campos Família/Pessoa de Referência:" class="underline">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Nome Completo" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Tipo de Documento Comprobatório: Certidão de Nascimento, Certidão de casamento, União estável, Carteira de Identidade, Carteira de Habilitação (CNH)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Sexo" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Certidão de Nascimento">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Data de Nascimento (ex.: ddmmaa)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade,Carteira de Habilitação (CNH), Certidão de Nascimento">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Pai e mãe não necessita comprovação" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="País Nascimento, Nacionalidade, Estado e Local de Nascimento" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Não necessita comprovação.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="CPF (obrigatório)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: CPF, Carteira de Identidade (se constar número do CPF, CNH)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Pai e mãe necessita comprovação somente se for dependente de Imposto de Renda" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Nº Cert. Nasc. Vivo (Informação necessária apenas para nascidos a partir de 2010)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Certidão de Nascimento">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Nome da Mãe do Dependente" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Tipo de Documento Comprobatório: Certidão de Nascimento, Certidão de casamento, União estável, Carteira de Identidade, Carteira de Habilitação (CNH)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Pai e mãe não necessita comprovação" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Campo Elegibilidades:" class="underline">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Dep. Inválido" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Tipo de Documento Comprobatório: Atestado do INSS comprovando a invalidez do dependente Invalidez é a incapacidade total, física ou mental, para trabalhar. Pessoas com necessidades especiais (como deficientes visuais e auditivos) não são considerados inválidos.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Na impossibilidade da obtenção do atestado de invalidez por parte do INSS, para fins de manutenção de filhos inválidos maiores de 24 anos (ou 21 se não estudantes), deve-se anexar a seguinte documentação:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Declaração que comprove o diagnóstico, acompanhada do CID 10;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Descrição pormenorizada das limitações do paciente;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Causa etiológica do diagnóstico;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Exames complementares que comprovem o diagnóstico.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Observação: A declaração deve estar em papel timbrado do serviço onde o paciente foi atendido; o nome e o CRM do médico responsável devem estar legíveis; o documento deve ter sido emitido há, no máximo, dois meses da data do envio."
+					class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Estudante (Entre 21 e 24 anos)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Atestado de matrícula do ensino superior">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Imposto de renda:" class="underline">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Cônjuge ou Companheiro" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Companheiro com quem o contribuinte tenha filho ou viva há mais de 5 anos, ou cônjuge.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Filhos e enteados" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Filho ou enteado de até 21 anos de idade, ou, em qualquer idade, quando incapacitado física e/ou mentalmente para o trabalho;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Filho ou enteado de até 24 anos, se ainda estiver cursando estabelecimento de ensino superior ou escola técnica de segundo grau.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Irmãos, netos e bisnetos" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Irmão, neto ou bisneto, sem arrimo dos pais, de quem o contribuinte detenha a guarda judicial, de até 21 anos, ou em qualquer idade, quando incapacitado física e/ou mentalmente para o trabalho;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Irmão, neto ou bisneto, sem arrimo dos pais, de quem o contribuinte detenha a guarda judicial, de até 24 anos, se ainda estiver cursando estabelecimento de ensino superior ou escola técnica de segundo grau, desde que o contribuinte tenha detido sua guarda judicial até os 21 anos.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Pais, avós  e bisavós" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Na Declaração de Ajuste Anual: pais, avós e bisavós que, em 2019 tenham recebido rendimentos, tributáveis ou não, até R$ 2247,76;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="• Na Declaração de Saída Definitiva do País: pais, avós e bisavós que, em 2019 tenham recebido rendimentos, tributáveis ou não, não superiores à soma do limite de isenção mensal de R$ 1903,98 correspondente aos meses abrangidos pela declaração.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Menor pobre" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Menor pobre, de até 21 anos, que o contribuinte crie e eduque, desde que detenha sua guarda judicial.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tutelados e curatelados" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Pessoa absolutamente incapaz da qual o contribuinte seja tutor ou curador.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

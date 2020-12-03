@@ -1,0 +1,509 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:t="sap.ui.table" controllerName="autoServico.view.DetailDependents"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Page id="detailPage" showNavButton="{device>/isPhone}" navButtonPress="onNavBack" title="{i18n>dependentes}">
+		<headerContent>
+			<Button id="btnQuickViewHelp" class="sapUiSmallMarginBottom" text="" press="onPress" icon="sap-icon://message-information"/>
+		</headerContent>
+		<content>
+			<!--<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}" numberUnit="{ET_HEADER>/ORGEH}"-->
+			<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
+				numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
+				<statuses>
+					<ObjectStatus text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo" state="None"/>
+					<ObjectStatus text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""
+						id="lblAdmissao" state="None"/>
+				</statuses>
+				<ObjectAttribute text="Matrícula: {ET_HEADER>/PERNR}"/>
+				<ObjectAttribute text="" id="lblNumReq"/>
+				<ObjectAttribute text="" class="" id="lblStatus"/>
+			</ObjectHeader>
+			<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContentBusy" width="100%">
+				<l:dependents>
+					<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"></core:Fragment>
+				</l:dependents>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContent" width="100%" visible="false"/>
+			<VBox width="auto" class="sapUiMediumMargin" id="vbDependents">
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""-->
+				<!--		id="lblAdmissao"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" id="lblNumReq"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" class="" id="lblStatus"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<f:SimpleForm id="formDependents" maxContainerCols="4" editable="false" layout="ResponsiveGridLayout" title="{i18n>dependentes}"
+					labelSpanL="0" labelSpanM="3" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="1" minWidth="1024">
+					<f:content>
+						<Text text="{i18n>texto_dependente_exc_pai_mae}" class="bold">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+						<t:Table id="tDependents" selectionMode="Single" class="sapUiTableTr" columnHeaderHeight="40" visibleRowCount="5" rows="{/}"
+							editable="false" enableColumnReordering="false" enableSelectAll="false" rowSelectionChange="onDependentRowSelectionChange"
+							selectionBehavior="Row" width="auto">
+							<t:toolbar>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<Button text="{i18n>adicionar_dependentes}" press="onDependentsAction" id="btnAddDep"/>
+									<Button text="{i18n>alterar_dependentes}" press="onDependentsAction" id="btnModDep" enabled="false"/>
+									<Button text="{i18n>delimitar_dependentes}" press="onDependentsAction" id="btnDelimitDep" enabled="false"/>
+								</Toolbar>
+							</t:toolbar>
+							<t:columns>
+								<t:Column width="auto" name="C_MEMBER" label="{i18n>membro}" resizable="false">
+									<Text text="{i18n>membro}"/>
+									<t:template>
+										<Text text="{MEMBER}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="auto" name="C_FCNAM" label="{i18n>nome_compl}" resizable="false">
+									<Text text="{i18n>nome_compl}"/>
+									<t:template>
+										<Text text="{FCNAM}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="auto" name="C_STATUS" label="{i18n>status}" resizable="false">
+									<Text text="{i18n>status}"/>
+									<t:template>
+										<Text text="{STATUS}"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+						<!--				<Text text="{i18n>texto_dependente_exc_pai_mae}" class="bold_underline">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>	-->
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formDependentsDetail" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" visible="false"
+					title="{i18n>familia_pessoa_ref}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+				<!--	title="{i18n>familia_pessoa_ref}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1"> -->
+					<f:content>
+						<Label text="{i18n>data_delimit}" class="sapUiSmallMarginTop" required="true">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDependentDelimitDate" change="onDelimitDateChange" valueFormat="YYYY-MM-ddT00:00:00" placeholder="ddmmaa(ex.:010988)"
+							value="{ET_DEPENDENTS>/ENDDA_DELIM}" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>membro}" class="sapUiSmallMarginTop" required="true" id="lblMemberType">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Select id="slMemberType" items="{ path: 'ET_SH_DEPENDENTS>/' }" change="onMemberTypeChange">
+							<core:Item key="{ET_SH_DEPENDENTS>SUBTY}" text="{ET_SH_DEPENDENTS>STEXT}"/>
+							<layoutData>
+								<l:GridData span="L4 M4 S12"/>
+							</layoutData>
+						</Select>
+						<Button id="btnQuickViewMember" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPressQuickView">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Button>
+						<Label text="{i18n>nome_compl}" class="sapUiSmallMarginTop" required="true" id="lblDependentFullName">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentFullName" value="{ET_DEPENDENTS>/FCNAM}" change="onFieldChange" maxLength="80" liveChange="onFieldLiveChange"
+							required="true">
+							<layoutData>
+								<l:GridData span="L6 M6 S12"/>
+							</layoutData>
+						</Input>
+						<Button id="btnQuickViewFullName" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPressQuickView">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Button>
+						<Label text="{i18n>sexo}" class="sapUiSmallMarginTop" id="lblSex">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<RadioButtonGroup columns="2" id="rbgSex">
+							<buttons>
+								<RadioButton id="rbFemale" text="{i18n>feminino}"/>
+								<RadioButton id="rbMale" text="{i18n>masculino}"/>
+							</buttons>
+						</RadioButtonGroup>
+						<Label text="{i18n>data_nasc}" class="sapUiSmallMarginTop" id="lblDependentBirthDate" required="true">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDependentBirthDate" change="onBirthDateChange" valueFormat="YYYY-MM-ddT00:00:00" placeholder="ddmmaa(ex.:010988)"
+							value="{ET_DEPENDENTS>/FGBDT}" required="true">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>pais_nascimento}" class="sapUiSmallMarginTop" id="lblDependentBirthCountry">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentBirthCountry" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onDependentBirthCountry"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_COUNTRY}" value="{ET_DEPENDENTS>/FGBLD}"
+							app:fragment="autoServico.view.SHDependentBirthCountry">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{LAND1}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtDependentBirthCountry" width="100%" textAlign="Left"/>
+						<Label text="{i18n>nacionalidade}" class="sapUiSmallMarginTop" id="lblDependentNationality">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentNationality" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onDependentNationality"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_NATIONALITY}" value="{ET_DEPENDENTS>/FANAT}"
+							app:fragment="autoServico.view.SHDependentNationality">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{LAND1}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtDependentNationality" width="100%" textAlign="Left"/>
+						<Label text="{i18n>regiao}" class="sapUiSmallMarginTop" id="lblDependentRegion">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentRegion" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onDependentRegion"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DEPENDENTS>/UFBOT}"
+							app:fragment="autoServico.view.SHDependentRegion" app:field="State">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+						<!--TGE388990-->
+						<Text class="sapUiSmallMarginTop" id="txtDependentRegion" width="100%" textAlign="Left"/>
+						<Button id="btDependentRegion" class="sapUiSmallMarginBottom" text="" width="20px" press="onPress" icon="sap-icon://message-information" visible="false" />
+						<Label text="{i18n>local_nascimento}" class="sapUiSmallMarginTop" id="lblDependentBirthPlace">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentBirthPlace" showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onDependentBirthPlaceChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_LOCAL_OF_BIRTH}" value="{ET_DEPENDENTS>/FGBOT}"
+							app:fragment="autoServico.view.SHDependentBirthPlace" app:field="Birthplace" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{TEXT}"/>
+							</suggestionItems>
+						</Input>
+						<!--TGE388990-->
+						<Text id="txtIpDependentBirthPlace" width="100%" class="sapUiSmallMarginTop"/>
+						<Button id="btDependentBirth" class="sapUiSmallMarginBottom" text="" width="20px" press="onPress" icon="sap-icon://message-information" visible="false" />
+						<!--Insert-->
+						<Label text="{i18n>matricula}" class="sapUiSmallMarginTop" id="lblMatricula">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipMatricula" change="onFieldChange" value="{ET_DEPENDENTS>/NOREU}" type="Text" maxLength="32">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>numero_registro}" class="sapUiSmallMarginTop" id="lblNRegistro">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipNRegistro" change="onFieldChange" value="{ET_DEPENDENTS>/NOREG}" type="Text" maxLength="10">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>numero_livro}" class="sapUiSmallMarginTop" id="lblNLivro">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipNLivro" change="onFieldChange" value="{ET_DEPENDENTS>/NOLIV}" type="Text" maxLength="10">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>numero_folha}" class="sapUiSmallMarginTop" id="lblNFolha">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipNFolha" change="onFieldChange" value="{ET_DEPENDENTS>/NOFOL}" type="Text" maxLength="5">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<!--Insert-->
+						<Label text="{i18n>cpf}" class="sapUiSmallMarginTop" required="false" id="lblCpf">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<MaskInput id="ipDependentCpf" value="{ET_DEPENDENTS>/ICNUM}" change="onCPFChange" type="Number" mask="999.999.999-99">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</MaskInput>
+						<Label text="{i18n>numero_nascido_vivo}" class="sapUiSmallMarginTop" id="lblDependentBornAliveNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentBornAliveNumber" change="onFieldChange" value="{ET_DEPENDENTS>/LBCNR}" type="Text" maxLength="13">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Text text="{i18n>explicacao_nascido_vivo}" class="sapUiSmallMarginTop">
+							<layoutData>
+								<l:GridData span="L7 M7 S12"/>
+							</layoutData>
+						</Text>
+						<Label text="{i18n>nome_mae}" class="sapUiSmallMarginTop" id="lblDependentsMothersName">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDependentsMothersName" value="{ET_DEPENDENTS>/MOTHE}" change="onFieldChange" maxLength="80" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L6 M6 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formDependentsEligibilities" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" visible="false"
+					title="{i18n>elegibilidades}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:toolbar>
+						<Toolbar id="tbDependentsEligibilities">
+							<Title level="H4" titleStyle="H4" text="{i18n>elegibilidades}"/>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://sys-help-2" id="btnQuickViewHelpElegibilities" press="onPress"/>
+						</Toolbar>
+					</f:toolbar>
+					<f:content>
+						<Label text="{i18n>dep_invalido}" class="sapUiSmallMarginTop" id="lblInvalidDependent">
+							<layoutData>
+								<l:GridData span="L3 M3 S5" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbInvalidDependent" selected="false" select="onEligibilitiesCBSelect">
+							<layoutData>
+								<l:GridData span="L1 M1 S7"/>
+							</layoutData>
+						</CheckBox>
+						<Label text="Estudante (Entre 21 e 24 anos)" class="sapUiSmallMarginTop" id="lblStudentDependent">
+							<layoutData>
+								<l:GridData span="L3 M3 S5"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbStudentDependent" selected="false" select="onEligibilitiesCBSelect">
+							<layoutData>
+								<l:GridData span="L3 M3 S7"/>
+							</layoutData>
+						</CheckBox>
+						<Label text="{i18n>sal_familia}" class="sapUiSmallMarginTop" id="lblDependentFamilySalary">
+							<layoutData>
+								<l:GridData span="L3 M3 S5" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbDependentFamilySalary" selected="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S7"/>
+							</layoutData>
+						</CheckBox>
+						<Label text="{i18n>imposto_renda}" class="sapUiSmallMarginTop" id="lblDependentIncomeTax">
+							<layoutData>
+								<l:GridData span="L3 M3 S5"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbDependentIncomeTax" selected="false" select="onEligibilitiesCBSelect">
+							<layoutData>
+								<l:GridData span="L3 M3 S7"/>
+							</layoutData>
+						</CheckBox>
+					</f:content>
+				</f:SimpleForm>
+				<!--<f:SimpleForm id="formDependentsBenefits" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" visible="false"-->
+				<!--	title="{i18n>beneficios}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">-->
+				<!--	<Label text="{i18n>farmacia}" class="sapUiSmallMarginTop" id="lblDrugstore">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--		</layoutData>-->
+				<!--	</Label>-->
+				<!--	<Input id="ipDrugstore" value="{/EW_DRUGSTORE}" editable="false">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12"/>-->
+				<!--		</layoutData>-->
+				<!--	</Input>-->
+				<!--	<Label text="{i18n>plano_de_saude}" class="sapUiSmallMarginTop" id="lblHealthInsurance">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--		</layoutData>-->
+				<!--	</Label>-->
+				<!--	<Input id="ipHealthInsurance" value="{/EW_HEALTH_INSURANCE}" editable="false">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12"/>-->
+				<!--		</layoutData>-->
+				<!--	</Input>-->
+				<!--	<Button icon="sap-icon://delete" id="btnCancelHealthInsurance" type="Transparent" width="5%" tooltip="{i18n>cancelar}"-->
+				<!--		press="onHealthInsurance" visible="true"/>-->
+				<!--	<Button icon="sap-icon://add" id="btnAddHealthInsurance" type="Transparent" width="5%" tooltip="{i18n>incluir}" press="onHealthInsurance"-->
+				<!--		visible="false"/>-->
+				<!--	<Label text="{i18n>plano_odontologico}" class="sapUiSmallMarginTop" id="lblDentalInsurance">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--		</layoutData>-->
+				<!--	</Label>-->
+				<!--	<Input id="ipDentalInsurance" editable="false">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12"/>-->
+				<!--		</layoutData>-->
+				<!--	</Input>-->
+				<!--	<Button icon="sap-icon://delete" id="btnCancelDentalInsurance" type="Transparent" width="5%" visible="true" tooltip="{i18n>cancelar}"-->
+				<!--		press="onDentalInsurance"/>-->
+				<!--	<Button icon="sap-icon://add" id="btnAddDentalInsurance" type="Transparent" width="5%" visible="false" tooltip="{i18n>incluir}"-->
+				<!--		press="onDentalInsurance"/>-->
+				<!--	<Label text="{i18n>plano_telemedicina}" class="sapUiSmallMarginTop" id="lblTelemedicina">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--		</layoutData>-->
+				<!--	</Label>-->
+				<!--	<Input id="ipTelemedicina" editable="false" value="">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12"/>-->
+				<!--		</layoutData>-->
+				<!--	</Input>-->
+				<!--	<Button icon="sap-icon://add" id="btnAddTelemedicina" type="Transparent" width="5%" visible="false" tooltip="{i18n>incluir}"-->
+				<!--		press="onAddTelemedicina"/>-->
+				<!--	<Label text="{i18n>plano_cuidado}" class="sapUiSmallMarginTop" id="lblCuidado">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--		</layoutData>-->
+				<!--	</Label>-->
+				<!--	<Input id="ipCuidado" editable="false" value="">-->
+				<!--		<layoutData>-->
+				<!--			<l:GridData span="L3 M3 S12"/>-->
+				<!--		</layoutData>-->
+				<!--	</Input>-->
+				<!--	<Button icon="sap-icon://add" id="btnAddCuidado" type="Transparent" width="5%" visible="false" tooltip="{i18n>incluir}" press="onAddCuidado"/>-->
+				<!--</f:SimpleForm>-->
+				<!--ARQUIVOS-->
+				<!--<f:SimpleForm id="formDependentsFiles" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" visible="false"-->
+				<!--	title="{i18n>arquivos}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">-->
+				<!--	<f:content>-->
+				<!--		<Link text="Termo de exclusão do cônjuge" id="linkPartner" href="" target="_blank">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="Termo de exclusão do filho/enteado" id="linkSonStepson" href="" target="_blank">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="Uniodonto" id="linkUniodonto" href="" target="_blank">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="INPAO" id="linkInpao" href="" target="_blank">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="Metlife" id="linkMetlife" href="" target="_blank">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="Declaração de Dep. para Fins de Desconto do IR na Fonte" id="link0" href="" target="_blank" visible="false">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--		<Link text="Termo de Responsabilidade" id="link1" href="" target="_blank" visible="false">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>-->
+				<!--			</layoutData>-->
+				<!--		</Link>-->
+				<!--	</f:content>-->
+				<!--</f:SimpleForm>-->
+			</VBox>
+		</content>
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustification" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment}" labelSpanL="2" labelSpanM="2"
+				adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+				<f:content>
+					<TextArea id="taJust" growing="false" change="onJustChange" width="100%" maxLength="255"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--JUSTIFICATION SSG-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustificationSSG" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment_SSG}" labelSpanL="2"
+				labelSpanM="2" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+				<f:content>
+					<TextArea id="taJustSSG" growing="false" change="onJustChange" maxLength="255" editable="false"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--ATTACHMENT-->
+		<UploadCollection id="upldAttachments" maximumFilenameLength="55" maximumFileSize="10" multiple="true" change="onChange"
+			filenameLengthExceed="onFilenameLengthExceed" sameFilenameAllowed="false" fileDeleted="onFileDeleted" fileRenamed="onFileRenamed"
+			fileSizeExceed="onFileSizeExceed" showSeparators="All" instantUpload="false" uploadComplete="onUploadComplete"
+			items="{ path: 'anexo>/ET_DMS'}" fileType="gif,txt,wrd,xml,xls,tif,pdf,mpp,doc,jpg,docx,xlsx,pptx,zip,msg,eml,ppt"
+			typeMissmatch="onTypeMissmatch" visible="false"	>
+			<items>
+				<UploadCollectionItem documentId="{anexo>FILENAME}" fileName="{anexo>FILENAME}" mimeType="{anexo>MIME_TYPE}" url="{anexo>URL}"
+					enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false"/>
+			</items>
+		</UploadCollection>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
+				<!--<Button text="{i18n>saneamento}" press="onSanitation" icon="sap-icon://accounting-document-verification" id="btnSanity"-->
+				<!--	tooltip="{i18n>saneamento_tooltip}" visible="false"/>-->
+				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" enabled="false"/>
+				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
+					tooltip="{i18n>enviar_tooltip}"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onCancel" icon="sap-icon://cancel" id="btnCancel" visible="false"
+					tooltip="{i18n>cancelar_tooltip}"/>
+				<Button type="Accept" text="{i18n>aprovar}" press="onApprove" icon="sap-icon://accept" id="btnApprove" visible="false"/>
+				<!--<Button type="Reject" text="{i18n>reprovar}" press="onReject" icon="sap-icon://decline" id="btnReject" visible="false"/>-->
+				<Button type="Accept" text="{i18n>gravar}" press="onAction" icon="sap-icon://save" id="btnSaveAction" visible="false"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onAction" icon="sap-icon://sys-cancel" id="btnCancelAction" visible="false"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

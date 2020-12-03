@@ -1,0 +1,398 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:t="sap.ui.table" controllerName="autoServico.view.DetailAddress"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Page id="detailPage" showNavButton="{device>/isPhone}" navButtonPress="onNavBack" title="{i18n>enderecos_telefone}">
+		<headerContent>
+			<Button id="btnQuickViewHelp" class="sapUiSmallMarginBottom" text="" press="onPressHelpAddress" icon="sap-icon://message-information"/>
+		</headerContent>
+		<content>
+			<!--<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}" numberUnit="{ET_HEADER>/ORGEH}"-->
+			<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
+				numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
+				<statuses>
+					<ObjectStatus text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo" state="None"/>
+					<ObjectStatus text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""
+						id="lblAdmissao" state="None"/>
+				</statuses>
+				<ObjectAttribute text="Matrícula: {ET_HEADER>/PERNR}"/>
+				<ObjectAttribute text="" id="lblNumReq"/>
+				<ObjectAttribute text="" class="" id="lblStatus"/>
+			</ObjectHeader>
+			<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContentBusy" width="100%">
+				<l:dependents>
+					<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"></core:Fragment>
+				</l:dependents>
+			</l:VerticalLayout>
+			<VBox class="sapUiResponsiveMargin">
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""-->
+				<!--		id="lblAdmissao"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" id="lblNumReq"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" class="" id="lblStatus"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<f:SimpleForm id="formAddressData" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="Endereço Residencial"
+					labelSpanL="2" labelSpanM="2" emptySpanL="2" emptySpanM="2" columnsL="2" columnsM="2">
+					<f:content>
+						<Label text="{i18n>cep}" class="sapUiSmallMarginTop" required="true" id="lblPostalCode">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Label>
+						
+						<MaskInput id="ipPostalCode" change="onFieldChangePostalCode" value="{ET_ADDRESS>/PSTLZ}" maxLength="9" type="Text" required="true"  mask="99999-999" placeholderSymbol=" ">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</MaskInput>
+				<!--		<Input id="ipPostalCode" change="onFieldChangePostalCode" value="{ET_ADDRESS>/PSTLZ}" maxLength="9" type="Text" required="true">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>-->
+						<Button id="btnQuickViewCEP" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPress"/>
+						<Label text="{i18n>rua}" class="sapUiSmallMarginTop" required="true" id="lblStreet">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/STRAS}" id="ipStreet" change="onFieldChange" required="true" editable="false"
+							placeholder="Ex: Avenida Borges de Medeiros" maxLength="60" liveChange="onFieldLiveChange" app:liveChangeFilter="uppercase">
+							<layoutData>
+								<l:GridData span="L5 M5 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>numero}" class="sapUiSmallMarginTop" required="true" id="lblStreetNum">
+							<layoutData>
+								<l:GridData span="L1 M1 S12"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/HSNMR}" id="ipStreetNum" change="onFieldChange" required="true" maxLength="10">
+							<layoutData>
+								<l:GridData span="L1 M1 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>complemento}" class="sapUiSmallMarginTop" id="lblStreetComp">
+							<layoutData>
+								<l:GridData span="L1 M1 S12"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/LOCAT}" id="ipStreetComp" change="onFieldChange" maxLength="40" liveChange="onFieldLiveChange" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>complemento}" class="sapUiSmallMarginTop" id="lblStreetCompE">
+							<layoutData>
+								<l:GridData span="L1 M1 S12"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/POSTA}" id="ipStreetCompE" change="onFieldChange" maxLength="10" liveChange="onFieldLiveChange" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>bairro}" class="sapUiSmallMarginTop" required="true" id="lblNeighborhood">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/ORT02}" id="ipNeighborhood" change="onFieldChange" required="true" editable="false" maxLength="40"
+							liveChange="onFieldLiveChange" app:liveChangeFilter="uppercase">
+							<layoutData>
+								<l:GridData span="L10 M10 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>chave_pais}" class="sapUiSmallMarginTop" required="true" id="lblCountry">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input width="100%" id="ipCountry" showSuggestion="true" showValueHelp="true" valueHelpRequest="onHelpRequestCountry" change="onFieldChange"
+							valueHelpOnly="true" value="{ET_ADDRESS>/LAND1}" editable="false" maxLength="3">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtCountry" width="100%" textAlign="Left">
+							<layoutData>
+								<l:GridData span="L8 M8 S12"/>
+							</layoutData>
+						</Text>
+						<Label text="{i18n>regiao}" class="sapUiSmallMarginTop" required="true" id="lblRegion">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input width="100%" id="ipRegion" showSuggestion="true" showValueHelp="true" valueHelpRequest="onHelpRequestRegion" change="onFieldChange"
+							valueHelpOnly="true" value="{ET_ADDRESS>/STATE}" editable="false" maxLength="3">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtRegion">
+							<layoutData>
+								<l:GridData span="L8 M8 S12"/>
+							</layoutData>
+						</Text>
+						<Label text="{i18n>cidade}" class="sapUiSmallMarginTop" required="true" id="lblCity">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/ORT01}" id="ipCity" showSuggestion="true" showValueHelp="true" valueHelpRequest="onHelpRequestCity"
+							change="onFieldChange" valueHelpOnly="true" editable="false" maxLength="40">
+							<layoutData>
+								<l:GridData span="L10 M10 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formComunicationData" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>comunicacao}"
+					labelSpanL="2" labelSpanM="2" emptySpanL="2" emptySpanM="2" columnsL="2" columnsM="2">
+					<f:content>
+						<!--<Label text="{i18n>telefone1}" class="sapUiSmallMarginTop" id="lblTypeTel1">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Label>-->
+						<!--<Text text="{i18n>telefone1}" class="sapUiSmallMarginTop" id="txtTel1">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L1 M1 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Text>-->
+						<Label text="{i18n>telefone1}" class="sapUiSmallMarginTop" id="lblTel1" required="true">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Label>
+						<!--<Input value="{ET_ADDRESS>/COM01}" width="8rem" id="ipTypeTel1" showSuggestion="true" showValueHelp="true" valueHelpRequest="onHelpRequestTypeTel"-->
+						<!--	valueHelpOnly="true" visible="true">-->
+						<!--<Input value="{ET_ADDRESS>/COM01}" id="ipTypeTel1" editable="false" visible="false">--> 
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Input>-->
+						<Input value="{ET_ADDRESS>/NUM01}" width="10rem" id="ipTel1" maxLength="18" placeholder="(DDD + Telefone)" liveChange="onFieldLiveChange"
+							app:liveChangeFilter="phoneRule">
+							<layoutData>
+								<l:GridData span="L8 M8 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>telefone2}" class="sapUiSmallMarginTop" id="lblTel2">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<!--<Input value="{ET_ADDRESS>/COM02}" width="8rem" id="ipTypeTel2" showSuggestion="true" showValueHelp="true"-->
+						<!--	valueHelpRequest="onHelpRequestTypeTel" change="onFieldChange" valueHelpOnly="true" visible="true">-->
+						<!--<Input value="{ET_ADDRESS>/COM02}" width="8rem" id="ipTypeTel2" editable="false" visible="false">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Input>-->
+						<!--<Text text="{i18n>telefone2}" class="sapUiSmallMarginTop" id="txtTel2">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L1 M1 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Text>-->
+						<!--<Label text="{i18n>telefone2}" class="sapUiSmallMarginTop" id="lblTel2">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Label>-->
+						<Input value="{ET_ADDRESS>/NUM02}" width="10rem" id="ipTel2" maxLength="18" placeholder="(DDD + Telefone)" liveChange="onFieldLiveChange"
+							app:liveChangeFilter="phoneRule" visible="false">
+							<layoutData>
+								<l:GridData span="L8 M8 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>telefone3}" class="sapUiSmallMarginTop" id="lblTel3">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<!--<Input value="{ET_ADDRESS>/COM03}" width="8rem" id="ipTypeTel3" showSuggestion="true" showValueHelp="true"-->
+						<!--	valueHelpRequest="onHelpRequestTypeTel" change="onFieldChange" valueHelpOnly="true">-->
+						<!--<Input value="{ET_ADDRESS>/COM03}" width="8rem" id="ipTypeTel3" editable="false" visible="false">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Input>-->
+						<!--<Text text="{i18n>telefone3}" class="sapUiSmallMarginTop" id="txtTel3">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L1 M1 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Text>-->
+						<!--<Label text="{i18n>telefone3}" class="sapUiSmallMarginTop" id="lblTel3">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="L2 M2 S12"/>-->
+						<!--	</layoutData>-->
+						<!--</Label>-->
+						<Input value="{ET_ADDRESS>/NUM03}" width="10rem" id="ipTel3" maxLength="18" placeholder="(DDD + Telefone)"
+							liveChange="onFieldLiveChange" app:liveChangeFilter="phoneRule" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M8 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>ramal}" class="sapUiSmallMarginTop" id="lblRamal">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/TEL_EXTENS}" maxLength="10" width="10rem" id="ipRamal" placeholder="RAMAL" liveChange="onFieldLiveChange" visible="true">
+							<layoutData>
+								<l:GridData span="L10 M10 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>email_particular}" class="sapUiSmallMarginTop" id="lblEmail">
+							<layoutData>
+								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_ADDRESS>/EMAIL}" width="20rem" id="ipEmail" placeholder="email@email.com" type="Email" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L10 M10 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<!--<f:SimpleForm id="formForeignAddressData" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout"-->
+				<!--	title="{i18n>endereco_exterior}" labelSpanL="2" labelSpanM="2" emptySpanL="2" emptySpanM="2" columnsL="2" columnsM="2">-->
+				<!--	<f:content>-->
+				<!--		<Label text="{i18n>rua}" class="sapUiSmallMarginTop" required="false" id="lblStreetForeign">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_STRAS}" width="20rem" id="ipStreetForeign" change="onFieldChange" liveChange="onFieldLiveChange"-->
+				<!--			app:liveChangeFilter="uppercase">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L5 M5 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>numero}" class="sapUiSmallMarginTop" required="false" id="lblStreetNumForeign">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L1 M1 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_HSNMR}" width="4rem" id="ipStreetNumForeign" change="onFieldChange" type="Number">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L1 M1 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>complemento}" class="sapUiSmallMarginTop" id="lblStreetCompForeign">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L1 M1 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_POSTA}" width="6rem" id="ipStreetCompForeign" change="onFieldChange" liveChange="onFieldLiveChange"-->
+				<!--			app:liveChangeFilter="uppercase">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>bairro}" class="sapUiSmallMarginTop" required="false" id="lblNeighborhoodForeign">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_ORT02}" width="20rem" id="ipNeighborhoodForeign" change="onFieldChange" liveChange="onFieldLiveChange"-->
+				<!--			app:liveChangeFilter="uppercase">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L10 M10 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>cidade}" class="sapUiSmallMarginTop" required="false" id="lblForeignCity">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_ORT01}" width="20rem" id="ipForeignCity" change="onForeignCityChange" liveChange="onFieldLiveChange"-->
+				<!--			app:liveChangeFilter="uppercase">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L10 M10 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>codigo_postal}" class="sapUiSmallMarginTop" required="false" id="lblPostalCodeForeign">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_PSTLZ}" width="20rem" id="ipPostalCodeForeign" change="onFieldChange">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L10 M10 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Label text="{i18n>pais_residencia}" class="sapUiSmallMarginTop" required="false" id="lblResidenceCountry">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Label>-->
+				<!--		<Input value="{ET_ADDRESS>/EX_LAND1}" width="100%" id="ipResidenceCountry" showSuggestion="true" showValueHelp="true"-->
+				<!--			valueHelpRequest="handleValueHelp" change="onCountryKeyChange" valueHelpOnly="true"-->
+				<!--			app:fragment="autoServico.view.SHResidenceCountry">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L2 M2 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Input>-->
+				<!--		<Text class="sapUiSmallMarginTop" id="txtResidenceCountry" width="100%" textAlign="Left">-->
+				<!--			<layoutData>-->
+				<!--				<l:GridData span="L8 M8 S12"/>-->
+				<!--			</layoutData>-->
+				<!--		</Text>-->
+				<!--	</f:content>-->
+				<!--</f:SimpleForm>-->
+			</VBox>
+		</content>
+		<!--JUSTIFICATION-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustification" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment}" labelSpanL="2" labelSpanM="2"
+				adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+				<f:content>
+					<TextArea id="taJust" growing="false" change="onJustChange" maxLength="255"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--JUSTIFICATION SSG-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustificationSSG" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment_SSG}" labelSpanL="2"
+				labelSpanM="2" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+				<f:content>
+					<TextArea id="taJustSSG" growing="false" change="onJustChange" maxLength="255" editable="false"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--ATTACHMENT-->
+		<!--		<UploadCollection id="upldAttachments" maximumFilenameLength="70" maximumFileSize="5" multiple="true" change="onChange"
+			sameFilenameAllowed="false" fileDeleted="onFileDeleted" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" showSeparators="All"
+			instantUpload="false" uploadComplete="onUploadComplete" items="{ path: 'anexo>/ET_DMS'}"
+			fileType="gif,txt,wrd,xml,xls,tif,pdf,mpp,doc,jpg,docx,xlsx,pptx,zip,msg,eml,ppt" typeMissmatch="onTypeMissmatch">
+			<items>
+				<UploadCollectionItem documentId="{anexo>FILENAME}" fileName="{anexo>FILENAME}" mimeType="{anexo>MIME_TYPE}" url="{anexo>URL}"
+					enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false"/>
+			</items>
+		</UploadCollection>-->
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
+				<!--<Button text="{i18n>saneamento}" press="onSanitation" icon="sap-icon://accounting-document-verification" id="btnSanity"-->
+				<!--	tooltip="{i18n>saneamento_tooltip}"/>-->
+				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" enabled="false"/>
+				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
+					tooltip="{i18n>enviar_tooltip}"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onCancel" icon="sap-icon://cancel" id="btnCancel" visible="false"
+					tooltip="{i18n>cancelar_tooltip}"/>
+				<Button type="Accept" text="{i18n>aprovar}" press="onApprove" icon="sap-icon://accept" id="btnApprove" visible="false"/>
+				<!--<Button type="Reject" text="{i18n>reprovar}" press="onReject" icon="sap-icon://decline" id="btnReject" visible="false"/>-->
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

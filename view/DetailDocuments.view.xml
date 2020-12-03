@@ -1,0 +1,588 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:t="sap.ui.table" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="autoServico.view.DetailDocuments">
+	<Page id="detailPage" showNavButton="{device>/isPhone}" navButtonPress="onNavBack" title="{i18n>documentos}">
+		<headerContent>
+			<Button id="btnQuickViewHelp" class="sapUiSmallMarginBottom" text="" press="onPress" icon="sap-icon://message-information"/>
+		</headerContent>
+		<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
+			numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
+			<statuses>
+				<ObjectStatus text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo" state="None"/>
+				<ObjectStatus text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""
+					id="lblAdmissao" state="None"/>
+			</statuses>
+			<ObjectAttribute text="Matrícula: {ET_HEADER>/PERNR}"/>
+			<ObjectAttribute text="" id="lblNumReq"/>
+			<ObjectAttribute text="" class="" id="lblStatus"/>
+		</ObjectHeader>
+		<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContentBusy" width="100%">
+			<l:dependents>
+				<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"/>
+			</l:dependents>
+		</l:VerticalLayout>
+		<content>
+			<VBox class="sapUiResponsiveMargin">
+				<f:SimpleForm id="formCpf" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>cpf}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_cpf}" class="sapUiSmallMarginTop">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipCpf" editable="false" value="{ET_DOCUMENTS>/CPF_NR}">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Button id="btnQuickViewCpf" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPress"/>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formRg" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>rg}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>documento_identidade}" class="sapUiSmallMarginTop" required="true" id="lblRg">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRg" value="{ET_DOCUMENTS>/IDENT_NR_0002}" maxLength="16" change="onFieldChange" required="true" editable="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>orgao_emissor}" class="sapUiSmallMarginTop" required="true" id="lblEmitterOrgan">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipEmitterOrgan" change="onFieldChange" editable="false" value="{ET_DOCUMENTS>/DOC_ISSUER_0002}" maxLength="20" required="true"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>data_expedicao}" class="sapUiSmallMarginTop" id="lblEmissionDate">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpEmissionDate" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0002}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>uf_expedicao}" class="sapUiSmallMarginTop" id="lblEmitterUF">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipEmitterUF" showSuggestion="true" editable="false" showValueHelp="true" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DOCUMENTS>/ES_EMIS_0002}"
+							app:fragment="autoServico.view.SHEmitterUF">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formCtps" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>ctps}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_ctps}" class="sapUiSmallMarginTop" id="lblCtps">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipCtps" change="onFieldChange" editable="false" value="{ET_DOCUMENTS>/CTPS_NR_0003}" maxLength="10">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>serie_ctps}" class="sapUiSmallMarginTop" id="lblCtpsSeries">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipCtpsSeries" change="onFieldChange" editable="false" value="{ET_DOCUMENTS>/CTPS_SERIE_0003}" maxLength="6">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>data_expedicao}" class="sapUiSmallMarginTop" id="lblEmissionDateCTPS">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpEmissionDateCTPS" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0003}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>uf_expedicao}" class="sapUiSmallMarginTop" id="lblEmitterCtps">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipEmitterCtps" showSuggestion="true" showValueHelp="true" editable="false" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DOCUMENTS>/ES_EMIS_0003}"
+							app:fragment="autoServico.view.SHEmitterCtps">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formRegionalCouncil" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>conselho_regional}"
+					labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_cons_reg}" class="sapUiSmallMarginTop" id="lblRegionalCouncilNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRegionalCouncilNumber" value="{ET_DOCUMENTS>/CREG_NR_0004}" editable="false" maxLength="15" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>nome_cons_reg}" class="sapUiSmallMarginTop" id="lblRegionalCouncilName">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRegionalCouncilName" value="{ET_DOCUMENTS>/CREG_NAME_0004}" editable="false" maxLength="90" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L7 M7 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>sigla_cons_reg}" class="sapUiSmallMarginTop" id="lblRegionalCouncilInitials">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRegionalCouncilInitials" value="{ET_DOCUMENTS>/CREG_INIT_0004}" editable="false" maxLength="10" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>orgao_emissor_con}" class="sapUiSmallMarginTop" id="lblRegionalCouncilOrgao">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRegionalCouncilOrgao" value="{ET_DOCUMENTS>/DOC_ISSUER_0004}" editable="false" maxLength="20" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>uf_expedicao}" class="sapUiSmallMarginTop" id="lblRegionalCouncilEmis" >
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipRegionalCouncilEmis" showSuggestion="true" showValueHelp="true" editable="false" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DOCUMENTS>/ES_EMIS_0004}"
+							app:fragment="autoServico.view.SHElectoralEsEmis" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+						<Label text="{i18n>data_expedicao}" class="sapUiSmallMarginTop" id="lblRegionalCouncilDtEmissao">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpRegionalCouncilDtEmissao" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0004}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formVoterTitle" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>titulo_eleitor}"
+					labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_titulo_eleitor}" class="sapUiSmallMarginTop" id="lblVoterTitleNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipVoterTitleNumber" value="{ET_DOCUMENTS>/ELEC_NR_0005}" editable="false" maxLength="15" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>zona_titulo_eleitor}" class="sapUiSmallMarginTop" id="lblVoterTitleZone">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipVoterTitleZone" value="{ET_DOCUMENTS>/ELEC_ZONE_0005}" editable="false" maxLength="5" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>secao_eleitoral}" class="sapUiSmallMarginTop" id="lblElectoralSection">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipElectoralSection" value="{ET_DOCUMENTS>/ELEC_SECT_0005}" editable="false" maxLength="5" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>data_expedicao}" class="sapUiSmallMarginTop" id="lblElectoralDtEmis" >
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpElectoralDtEmis" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0005}" required="true" placeholder="ddmmaa(ex.: 010988)" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>uf_expedicao}" class="sapUiSmallMarginTop" id="lblElectoralEsEmis" >
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipElectoralEsEmis" showSuggestion="true" showValueHelp="true" editable="false" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DOCUMENTS>/ES_EMIS_0005}"
+							app:fragment="autoServico.view.SHElectoralEsEmis" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formPisPasep" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>pis_pasep}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>pis_pasep}" class="sapUiSmallMarginTop" required="false" id="lblPis">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipPisPasep" value="{ET_DOCUMENTS>/PIS_NR_0006}" editable="false" change="onPISChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formDriversLicense" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout"
+					title="{i18n>carteira_habilitacao}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_carteira_hab}" class="sapUiSmallMarginTop" id="lblDriversLicenseNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDriversLicenseNumber" value="{ET_DOCUMENTS>/DRIVE_NR_0010}" editable="false" maxLength="12" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>orgao_emissor_cnh}" class="sapUiSmallMarginTop" id="lblDriversLicenseOrgan">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDriversLicenseOrgan" value="{ET_DOCUMENTS>/DOC_ISSUER_0010}" editable="false" maxLength="20" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>categoria_hab}" class="sapUiSmallMarginTop" id="lblDriversLicenseCategory">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDriversLicenseCategory" value="{ET_DOCUMENTS>/DRIVE_CAT_0010}" editable="false" maxLength="3" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L1 M1 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>dt_emis}" class="sapUiSmallMarginTop" id="lblDriversLicenseEmissionDate">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDriversLicenseEmissionDate" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0010}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>dt_vencimento}" class="sapUiSmallMarginTop" id="lblDriversLicenseDueDate">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDriversLicenseDueDate" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/ENDDA_0010}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>data_cnh}" class="sapUiSmallMarginTop" id="lblPri_Habil">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpPriHabilitacao" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/PRIHABDAT_0010}" placeholder="ddmmaa(ex.: 010988)" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formPassport" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>passaporte}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_passaporte}" class="sapUiSmallMarginTop" id="lblPassportNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipPassportNumber" value="{ET_DOCUMENTS>/PASSP_NR_0011}" editable="false" maxLength="15" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>dt_emis}" class="sapUiSmallMarginTop" id="lblPassportEmissionDate">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpPassportEmissionDate" change="onDateChange" editable="false" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_EMIS_0011}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formForeignersIdentityCard" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout"
+					title="{i18n>carteira_ident_estrang}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_id_estrangeiro}" class="sapUiSmallMarginTop" id="lblForeignersIdentityCardNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipForeignersIdentityCardNumber" editable="false" value="{ET_DOCUMENTS>/IDFOR_NR_0008}" maxLength="20" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>orgao_emissor_rne}" class="sapUiSmallMarginTop" id="lblForeignersIdentityCardEmitterRNE">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipForeignersIdentityCardEmitterRNE" editable="false" value="{ET_DOCUMENTS>/DOC_ISSUER_0008}" maxLength="20"
+							change="onFieldChange" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formForeignVisa" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>visto_estrangeiro}"
+					labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>numero_serie_visto}" class="sapUiSmallMarginTop" id="lblVistaSerialNumber">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipVistaSerialNumber" editable="false" value="{ET_DOCUMENTS>/VISA_NR_0009}" maxLength="6" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>tipo_visto}" class="sapUiSmallMarginTop" id="lblVistaType">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipVistaType" value="{ET_DOCUMENTS>/VISA_TYPE_0009}" editable="false" maxLength="20" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>dt_chegada_brasil}" class="sapUiSmallMarginTop" id="lblDateArrivalBrazil">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDateArrivalBrazil" editable="false" change="onDateChange" valueFormat="YYYY-MM-ddT00:00:00"
+							value="{ET_DOCUMENTS>/DT_ARRV_0009}" placeholder="ddmmaa(ex.: 010988)">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>conjuge_bras}" class="sapUiSmallMarginTop" id="lblBrazilianPartner">
+							<layoutData>
+								<l:GridData span="L3 M3 S5" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbBrazilianPartner" selected="false" select="onFieldChange" editable="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S7"/>
+							</layoutData>
+						</CheckBox>
+						<Label text="{i18n>filhos_bras}" class="sapUiSmallMarginTop" id="lblBrazilianChildren">
+							<layoutData>
+								<l:GridData span="L3 M3 S5" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbBrazilianChildren" selected="false" select="onFieldChange" editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S7"/>
+							</layoutData>
+						</CheckBox>
+						<Label text="{i18n>dt_emis}" class="sapUiSmallMarginTop" id="lblDtEmisVista" >
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpDtEmisVista" change="onDateChange" valueFormat="YYYY-MM-ddT00:00:00" editable="false" value="{ET_DOCUMENTS>/DT_EMIS_0009}"
+							placeholder="ddmmaa(ex.: 010988)" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>cond_trab_estrag}" class="sapUiSmallMarginTop" id="lblCondTrabEstrag">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Select id="slCondTrabEstrag" change="onFieldChange" items="{ path: 'ET_SH_TRABALHO_ESTRAG>/' }">
+							<core:Item key="{ET_SH_TRABALHO_ESTRAG>TRABAHO}" text="{ET_SH_TRABALHO_ESTRAG>DESC_TRAB}"/>
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</Select>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formNIF" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>nif}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1" visible="false">
+					<f:content>
+						<Label text="{i18n>numero_nit}" class="sapUiSmallMarginTop" id="lblNitNumber" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipNitNumber" value="{ET_DOCUMENTS>/NIT_NR_9999}" maxLength="11" change="onFieldChange" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>dt_emis}" class="sapUiSmallMarginTop" id="lblNitmissionDate" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpNitmissionDate" change="onDateChange" valueFormat="YYYY-MM-ddT00:00:00" value="{ET_DOCUMENTS>/DT_EMIS_9999}"
+							placeholder="ddmmaa(ex.: 010988)" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>pais_dirf}" class="sapUiSmallMarginTop" id="lblDirfsCountry" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipDirfsCountry" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_DOCUMENTS>/LAND1_9999}"
+							app:fragment="autoServico.view.SHDirfsCountry" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtDirfsCountry" width="100%" textAlign="Left">
+							<layoutData>
+								<l:GridData span="L6 M6 S12"/>
+							</layoutData>
+						</Text>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+			<!--		</Panel>-->
+		</content>
+		<!--JUSTIFICATION-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustification" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment}" labelSpanL="2" labelSpanM="2"
+				adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+				<f:content>
+					<TextArea id="taJust" growing="false" change="onFieldChange" maxLength="255"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--JUSTIFICATION SSG-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustificationSSG" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment_SSG}" labelSpanL="2"
+				labelSpanM="2" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+				<f:content>
+					<TextArea id="taJustSSG" growing="false" change="onJustChange" maxLength="255" editable="false"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--ATTACHMENT-->
+		<UploadCollection id="upldAttachments" maximumFilenameLength="70" maximumFileSize="5" multiple="true" change="onChange"
+			filenameLengthExceed="onFilenameLengthExceed" sameFilenameAllowed="false" fileDeleted="onFileDeleted" fileRenamed="onFileRenamed"
+			fileSizeExceed="onFileSizeExceed" showSeparators="All" instantUpload="false" uploadComplete="onUploadComplete"
+			items="{ path: 'anexo>/ET_DMS'}" fileType="gif,txt,wrd,xml,xls,tif,pdf,mpp,doc,jpg,docx,xlsx,pptx,zip,msg,eml,ppt"
+			typeMissmatch="onTypeMissmatch" visible="false">
+			<items>
+				<UploadCollectionItem documentId="{anexo>FILENAME}" fileName="{anexo>FILENAME}" mimeType="{anexo>MIME_TYPE}" url="{anexo>URL}"
+					enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false"/>
+			</items>
+		</UploadCollection>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
+				<!--<Button text="{i18n>saneamento}" press="onSanitation" icon="sap-icon://accounting-document-verification" id="btnSanity" tooltip="{i18n>saneamento_tooltip}"/>-->
+				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" enabled="false" visible="false"/>
+				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
+					tooltip="{i18n>enviar_tooltip}"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onCancel" icon="sap-icon://cancel" id="btnCancel" visible="false"
+					tooltip="{i18n>cancelar_tooltip}"/>
+				<Button type="Accept" text="{i18n>aprovar}" press="onApprove" icon="sap-icon://accept" id="btnApprove" visible="false"/>
+				<!--<Button type="Reject" text="{i18n>reprovar}" press="onReject" icon="sap-icon://decline" id="btnReject" visible="false"/>-->
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

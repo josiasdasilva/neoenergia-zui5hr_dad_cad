@@ -1,0 +1,94 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Dependentes">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="SALÁRIO FAMÍLIA" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Lei nº 4.266" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Art. 1º O “salário-família” instituído pela Lei nº 4.266, de 3 de outubro de 1963, tem por finalidade assegurar aos trabalhadores, por ela abrangidos, quotas destinadas a auxiliá-los no sustento e educação dos filhos, observadas as condições e limites na mesma lei estabelecidos e os termos deste Regulamento.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Quem tem direito?">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Dependentes legais até 14 (quatorze) anos de idade, ou inválido de qualquer idade. O valor da quota salário-família está condicionado aos limites salariais previstos em Legislação.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="IMPOSTO DE RENDA" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Quem pode ser considerado seu dependente no Imposto de Renda?" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Filho (a) ou enteado (a), até 21 anos de idade;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Filho (a) ou enteado (a), em qualquer idade, quando incapacitado física ou mentalmente para o trabalho;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Filho (a) ou enteado (a) universitário ou cursando escola técnica de segundo grau, até 24 anos;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Menor até 21 anos que o contribuinte crie e eduque e de quem detenha a guarda judicial;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Pessoa absolutamente incapaz, da qual o contribuinte seja tutor ou curador;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Companheiro (a) com quem o contribuinte tenha filho em comum;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Companheiro (a) com quem o contribuinte viva há mais de cinco anos;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Cônjuge;">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="● Pais, desde que não excedam o valor limite de rendimentos previsto na Legislação do Imposto de Renda.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
