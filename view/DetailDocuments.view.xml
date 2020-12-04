@@ -5,6 +5,7 @@
 		<headerContent>
 			<Button id="btnQuickViewHelp" class="sapUiSmallMarginBottom" text="" press="onPress" icon="sap-icon://message-information"/>
 		</headerContent>
+		<content>
 		<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
 			numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
 			<statuses>
@@ -21,7 +22,7 @@
 				<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"/>
 			</l:dependents>
 		</l:VerticalLayout>
-		<content>
+		
 			<VBox class="sapUiResponsiveMargin">
 				<f:SimpleForm id="formCpf" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>cpf}" labelSpanL="2"
 					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
@@ -574,7 +575,6 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
-				<!--<Button text="{i18n>saneamento}" press="onSanitation" icon="sap-icon://accounting-document-verification" id="btnSanity" tooltip="{i18n>saneamento_tooltip}"/>-->
 				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" enabled="false" visible="false"/>
 				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
 					tooltip="{i18n>enviar_tooltip}"/>

@@ -206,6 +206,91 @@ sap.ui.define([
 			}
 			this._oDialog.open();
 		},
+		setDocumentStatus: function(reqNumber,status){
+      var that = this;
+			var oDialog = that.getView().byId("BusyDialog");
+
+			try {
+				oDialog.open();
+
+				var that = this;
+
+				/**
+				 * **************To Fetch CSRF Token******************
+				 */
+				// var a = "/Yourservice URL or Metadata URL ";
+				var a = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV";
+				var f = {
+					headers: {
+						"X-Requested-With": "XMLHttpRequest",
+						"Content-Type": "application/atom+xml",
+						//"Content-Type" : "application/xml",
+						DataServiceVersion: "2.0",
+						"X-CSRF-Token": "Fetch",
+					},
+					requestUri: a,
+					method: "GET"
+				};
+				var oHeaders;
+				var oModel = new sap.ui.model.odata.ODataModel(a, true);
+				var dados = "";
+				sap.ui.getCore().setModel(oModel);
+				OData.request(f, function(data, oSuccess) {
+
+					var oToken = oSuccess.headers['x-csrf-token'];
+					/**
+					 * ValidaÁao para o caso do navegador ser o Firefox/IE *
+					 */
+					if (oToken == null) {
+						oToken = oSuccess.headers['X-CSRF-Token'];
+					}
+					// that.getView().byId('tAnexos').getRows()[0].getCells()[1];
+
+					var anexos = that.getView().getModel("Attachments").getData().table;
+					if (anexos.length == 0) {
+						oDialog.close();
+						return;
+					}
+
+          var req = reqNumber; //that.getView().getModel("ET_PERS_DATA").getData().REQUISITION_ID;
+          var calledOnce = false;
+					for (var i = 0; i < anexos.length; i++) {
+						if (anexos[i].New === true) {
+							var table = that.getView().byId('tAnexos').getRows();
+							var uploadCollection = table[i].getCells()[1].getItems()[0];
+							var key = table[i].getCells()[0].getSelectedItem().getKey();
+							dados = "";
+							// Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
+							// dados += uploadCollection.getValue() + ";DOA" + ";1234;" + req + ";INSERT" ;
+							dados += uploadCollection.getValue() + ";DOA;" + req + ";STATUS;" + key + ";" + status + ";" + that.getView().getModel(
+								"ET_HEADER").getData().PERNR;
+
+							if (uploadCollection) {
+								uploadCollection.destroyHeaderParameters();
+								uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
+									name: "slug",
+									value: dados
+								}));
+
+								uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
+									name: "x-csrf-token",
+									value: oToken
+								}));
+
+								uploadCollection.setSendXHR(true);
+								uploadCollection.setUploadUrl("/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/AnexoSet");
+								uploadCollection.upload();
+							}
+            }
+            if(calledOnce) break;
+					}
+					oDialog.close();
+				});
+			} catch (oException) {
+				jQuery.sap.log.error("Erro Conexão" + oException.message);
+				oDialog.close();
+			}
+		},
 		saveAttachment: function(reqNumber, status) {
 			var that = this;
 			var oDialog = that.getView().byId("BusyDialog");
@@ -262,7 +347,7 @@ sap.ui.define([
 							var uploadCollection = table[i].getCells()[1].getItems()[0];
 							var key = table[i].getCells()[0].getSelectedItem().getKey();
 							dados = "";
-							// NOme do arquivo;tipo do arquivo;numero requisição;operação, tipo,status requisição, pernr;
+							// Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
 							// dados += uploadCollection.getValue() + ";DOA" + ";1234;" + req + ";INSERT" ;
 							dados += uploadCollection.getValue() + ";DOA;" + req + ";INSERT;" + key + ";" + status + ";" + that.getView().getModel(
 								"ET_HEADER").getData().PERNR;

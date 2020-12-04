@@ -24,18 +24,6 @@
 				</l:dependents>
 			</l:VerticalLayout>
 			<VBox class="sapUiResponsiveMargin">
-				<!--<l:HorizontalLayout class="">-->
-				<!--<Label text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo"></Label>-->
-				<!--</l:HorizontalLayout>-->
-				<!--<l:HorizontalLayout class="">-->
-				<!--<Label text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class="" id="lblAdmissao"></Label>-->
-				<!--</l:HorizontalLayout>-->
-				<!--<l:HorizontalLayout class="">-->
-				<!--<Label text="" id="lblNumReq"></Label>-->
-				<!--</l:HorizontalLayout>-->
-				<!--<l:HorizontalLayout class="">-->
-				<!--<Label text="" class="" id="lblStatus"></Label>-->
-				<!--</l:HorizontalLayout>-->
 				<f:SimpleForm id="formName" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>nome}" labelSpanL="2"
 					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
 					<f:content>
