@@ -279,7 +279,8 @@ sap.ui.define([
 
 								uploadCollection.setSendXHR(true);
 								uploadCollection.setUploadUrl("/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/AnexoSet");
-								uploadCollection.upload();
+                uploadCollection.upload();
+                calledOnce = true;
 							}
             }
             if(calledOnce) break;
