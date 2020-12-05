@@ -261,8 +261,8 @@ sap.ui.define([
 							var key = table[i].getCells()[0].getSelectedItem().getKey();
 							dados = "";
 							// Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
-							// dados += uploadCollection.getValue() + ";DOA" + ";1234;" + req + ";INSERT" ;
-							dados += uploadCollection.getValue() + ";DOA;" + req + ";STATUS;" + key + ";" + status + ";" + that.getView().getModel(
+							// dados += uploadCollection.getValue() + ";DOA" + req + action + number of files + status + PERNR
+							dados += uploadCollection.getValue() + ";DOA;" + req + ";STATUS;" + anexos.length + ";" + status + ";" + that.getView().getModel(
 								"ET_HEADER").getData().PERNR;
 
 							if (uploadCollection) {
