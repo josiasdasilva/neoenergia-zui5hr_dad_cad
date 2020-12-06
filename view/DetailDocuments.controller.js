@@ -857,9 +857,8 @@ sap.ui.define([
 					that.fVerifyAction(false, "S");
 					// *** ANEXO ***
 					that.saveAttachment(oGlobalData.IM_REQUISITION_ID, 'S');
-					that.closeDmsDocument(oGlobalData.IM_REQUISITION_ID);
+					that.closeDmsDocument(oGlobalData.IM_REQUISITION_ID); 
 					break;
-
 				case "C":
 					MessageBox.success("Operação realizada com sucesso! As alterações realizadas foram canceladas");
 

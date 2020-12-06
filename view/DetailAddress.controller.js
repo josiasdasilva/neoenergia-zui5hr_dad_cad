@@ -798,7 +798,7 @@ sap.ui.define([
 					that.fVerifyAction(false, "S");
 					// *** ANEXO ***
 					that.saveAttachment(oGlobalData.IM_REQUISITION_ID, 'S');
-
+					that.closeDmsDocument(oGlobalData.IM_REQUISITION_ID);
 					break;
 
 				case "C":
@@ -1239,6 +1239,15 @@ sap.ui.define([
 
 			if (oDialog) {
 				oDialog.saveAttachment(reqNumber, status);
+			}
+		},
+		closeDmsDocument: function (reqNumber) {
+			var sDialogName = 'Anexo';
+			this.mDialogs = this.mDialogs || {};
+			var oDialog = this.mDialogs[sDialogName];
+
+			if (oDialog) {
+				oDialog.setDocumentStatus(reqNumber, 'S');
 			}
 		},
 		getAttachment: function () {

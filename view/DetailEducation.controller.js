@@ -363,6 +363,7 @@ sap.ui.define([
 					that.fSucessMessageFromSendAction(oEvent, true);
 					that.fVerifyAction(false, "S");
 					that.saveAttachment(oGlobalData.REQUISITION_ID, 'S');
+					that.closeDmsDocument(oGlobalData.REQUISITION_ID);
 					// *** ANEXO ***
 					//that.fSaveAttachmentView(oEvent.EX_REQUISITION_ID);
 					break;
@@ -652,6 +653,15 @@ sap.ui.define([
 			
 			if (oDialog) {
 				oDialog.saveAttachment(reqNumber, status);
+			}
+		},
+		closeDmsDocument: function (reqNumber) {
+			var sDialogName = 'Anexo';
+			this.mDialogs = this.mDialogs || {};
+			var oDialog = this.mDialogs[sDialogName];
+
+			if (oDialog) {
+				oDialog.setDocumentStatus(reqNumber, 'S');
 			}
 		},
 		getAttachment:function(){
