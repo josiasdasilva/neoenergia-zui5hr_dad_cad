@@ -40,7 +40,6 @@ sap.ui.core.mvc.Controller.extend("autoServico.view.Master", {
 			sBukrs = '';
 
 		function fSuccessExecutar(oEvent) {
-			debugger;
 			var oValue = new sap.ui.model.json.JSONModel(oEvent.results[0].EX_EMPLOYEE_HEADER);
 			oValue.oData.PERNR = oEvent.results[0].IM_PERNR;
 			sap.ui.getCore().setModel(oValue, "ET_HEADER");

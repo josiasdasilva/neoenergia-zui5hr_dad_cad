@@ -9,6 +9,15 @@ sap.ui.define([
 	// ], function (ManagedObject, MessageBox, Utilities, History, connections) {
 ], function(ManagedObject, MessageBox, History, Filter, JSONModel) {
 
+	const req_subtype = {
+		dados_bancarios: '101',
+		dados_pessoais: '102',
+		dependentes: '103',
+		documentos: '104',
+		enderecos: '105',
+		formacao: '106'
+	};
+
 	return ManagedObject.extend("autoServico.view.Anexo", {
 		getJustificationData: function() {},
 
@@ -84,7 +93,7 @@ sap.ui.define([
 				// this.getView().byId("addAtt").setVisible(false);
 			}
 
-			if (numTela == "104") {
+			if (numTela == req_subtype.documentos) {
 				if (this.getView().byId("btnAccept").getVisible() === true) {
 					this.getView().byId("eToolbar").setVisible(true);
 				} else {
@@ -465,7 +474,6 @@ sap.ui.define([
 
 		},
 		getFieldsDMS: function(numTela) {
-			debugger;
 			var that = this;
 			var oModelData = new sap.ui.model.odata.ODataModel(this.getView().getModel().sServiceUrl);
 			var oBindingContext = this.getView().getBindingContext();
@@ -497,10 +505,7 @@ sap.ui.define([
 			});
 		},
 		montaTelaAnexo: function(changedData, numTela) {
-			//TGE388990
 			this.changedData = this.removeDuplicates(changedData);
-			//
-
 			var fields = this.fieldsDMS;
 			var fieldsChanged = [];
 			var anexos = this.getView().getModel("Attachments").getData();
@@ -508,7 +513,6 @@ sap.ui.define([
 			var obj = {
 				UI5_FIELD: '',
 				DMS_FIELDS: []
-
 			};
 
 			for (var x = 0; anexos.table.length > x; x++) {
@@ -636,7 +640,7 @@ sap.ui.define([
 
 			var nomeAlt = false;
 
-			if (numTela == "102") {
+			if (numTela == req_subtype.dados_pessoais) {
 				for (i = 0; changedData.length > i; i++) {
 					if (changedData[i] == "ipFullName") {
 						nomeAlt = true;
@@ -721,7 +725,6 @@ sap.ui.define([
 			}
 			this.getView().byId('tAnexos').getRows()[id].getCells()[1].getItems()[0].setValue("");
 			// anexos.table.splice(id, 1);
-			debugger;
 			anexos.table[id] = {
 				New: true,
 				Old: false,

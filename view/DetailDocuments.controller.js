@@ -1519,10 +1519,8 @@ sap.ui.define([
 						that.getView().byId("dpPriHabilitacao").setVisible(true);
 
 					}
-					debugger;
 				},
 				error: function (e) {
-					debugger;
 				}
 			});
 		},

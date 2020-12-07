@@ -1206,10 +1206,8 @@ sap.ui.define([
 						// that.getView().byId("ipRamal").setVisible(true);
 						that.getView().byId("ipStreetComp").setVisible(true);
 					}
-					debugger;
 				},
 				error: function (e) {
-					debugger;
 				}
 			});
 		},

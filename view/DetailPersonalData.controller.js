@@ -40,7 +40,6 @@ sap.ui.define([
 			this.getAttachment();
 		},
 		onChange:function(){
-			debugger;	
 		},
 		showDialogAnexo: function (){
 
@@ -49,10 +48,8 @@ sap.ui.define([
 			var oDialog = this.mDialogs[sDialogName];
 
 			if (!oDialog) {
-	    		oDialog = new Anexo(this.getView()); //Justificar ausencia
-	
+	    		oDialog = new Anexo(this.getView());
 				this.mDialogs[sDialogName] = oDialog;
-	
 				// For navigation.
 				oDialog.setRouter(this.oRouter);
 			}
@@ -787,7 +784,7 @@ sap.ui.define([
 
 			if (this.fValidInputFields() === true) {
 				this.handleErrorMessageBoxPress();
-			} else if (attachment === false && (obligAttach === true || this.obligatoryChanged === true)) {
+			} else if (!attachment && (obligAttach || this.obligatoryChanged)) {
 				this.handleErrorMessageAttachment();
 			} else { //if ((obligAttach === false || attachment === true) && this.obligatoryChanged === false)  {
 				MessageBox.confirm(

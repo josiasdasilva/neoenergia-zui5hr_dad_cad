@@ -586,7 +586,6 @@ sap.ui.define([
 		onBankKeyBCChange: function (oEvent) {
 			var bankAgencyBCCod = this.getView().byId("ipBankAgencyBCCod");
 			var codStatus = false;
-			debugger;
 			var attribute;
 
 			if (oEvent.oSource.getSelectedKey() !== "0019") {
@@ -931,7 +930,6 @@ sap.ui.define([
 			var bankAccountMB = oView.getModel("ET_BANK_DET").oData.BANKN0; //Account;
 			var bankAccountDigitMB = oView.byId("ipBankAccountMBDCod").getValue(); //Account Digit;
 			var bankAgencyDigitMB = oView.byId("ipBankAgencyMBDCod").getValue(); //Agency Digit;
-			debugger;
 			oCreate.BLOCK.CHECKING_ACCOUNT = oView.byId("cbSalaryCount").getSelected();
 			bankMB = oView.byId("slBankKeyMBD").getSelectedKey(); //Bank  
 			bankAgencyMB = oView.byId("ipBankAgencyMBD").getValue(); //Agency
