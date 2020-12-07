@@ -55,7 +55,7 @@ sap.ui.define([
 			}
 			
 			oDialog.open(this.changedData, '102');
-			this.changedData = [];
+			//this.changedData = [];
 		},
 		saveAttachment: function(reqNumber, status){
 			var sDialogName = 'Anexo';

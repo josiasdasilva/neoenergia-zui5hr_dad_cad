@@ -1227,7 +1227,7 @@ sap.ui.define([
 			}
 
 			oDialog.open(this.changedData, "105");
-			this.changedData = [];
+			//this.changedData = [];
 		},
 
 		saveAttachment: function (reqNumber, status) {
