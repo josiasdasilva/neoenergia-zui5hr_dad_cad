@@ -3377,7 +3377,7 @@ sap.ui.define([
 				var attachment = this.fValidAttachment();
 				var attachmentRequired = false;
 
-				if (attachment === false) {
+				if (!attachment) {
 					/*					for (var i = 0; i < modelTable.length; i++) {
 											if (modelTable[i].ACTIO_BLOCK.trim() === "" || ((modelTable[i].SUBTY === "11" || modelTable[i].SUBTY === "12")) && modelTable[i]
 												.ACTIO_BLOCK === "MOD") {

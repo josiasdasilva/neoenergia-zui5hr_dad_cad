@@ -930,7 +930,7 @@ sap.ui.define([
 
 			var attachment = this.fValidAttachment();
 
-			if (attachment === false) {
+			if (!attachment) {
 				this.handleErrorMessageAttachment();
 				return;
 			}

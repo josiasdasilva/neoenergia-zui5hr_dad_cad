@@ -535,7 +535,7 @@ sap.ui.define([
 			var message = oBundle.getText("termo_responsabilidade");
 			var attachment = this.fValidAttachment();
 			
-			if(attachment === false){
+			if(!attachment){
 				this.handleErrorMessageAttachment();
 				return;
 			}

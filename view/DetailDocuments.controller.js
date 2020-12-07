@@ -1331,7 +1331,7 @@ sap.ui.define([
 
 			if (this.fValidInputFields() === true) {
 				this.handleErrorMessageBoxPress();
-			} else if (attachment === false && (this.modelHasChanged === true || this.obligatoryChanged === true)) {
+			} else if (!attachment && (this.modelHasChanged || this.obligatoryChanged)) {
 				this.handleErrorMessageAttachment();
 			} else { //if ((this.modelHasChanged === false || attachment === true && this.obligatoryChanged === false)) {
 
