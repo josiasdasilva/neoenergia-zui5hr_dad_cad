@@ -739,6 +739,10 @@ sap.ui.define([
 			this.fMessage("None", null, "ipDependentBornAliveNumber");
 		},
 
+		onGenderSelect: function(oEvent) {
+			var fieldName = 'ipGender';
+			this.changedData.push(fieldName);
+		},
 		//	--------------------------------------------
 		//	onFieldLiveChange
 		//	--------------------------------------------		
