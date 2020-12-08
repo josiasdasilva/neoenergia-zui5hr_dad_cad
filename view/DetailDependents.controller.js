@@ -740,7 +740,7 @@ sap.ui.define([
 		},
 
 		onGenderSelect: function(oEvent) {
-			var fieldName = 'ipGender';
+			var fieldName = 'rbgSex';
 			this.changedData.push(fieldName);
 		},
 		//	--------------------------------------------
