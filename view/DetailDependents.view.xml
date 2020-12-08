@@ -140,7 +140,7 @@
 						<RadioButtonGroup columns="2" id="rbgSex">
 							<buttons>
 								<RadioButton id="rbFemale" text="{i18n>feminino}" select="onGenderSelect"/>
-								<RadioButton id="rbMale" text="{i18n>masculino}" select="onGenderSelect/>
+								<RadioButton id="rbMale" text="{i18n>masculino}" select="onGenderSelect"/>
 							</buttons>
 						</RadioButtonGroup>
 						<Label text="{i18n>data_nasc}" class="sapUiSmallMarginTop" id="lblDependentBirthDate" required="true">
