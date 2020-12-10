@@ -18,8 +18,8 @@ sap.ui.define([
     formacao: '106'
   };
   
+  this.changedData = {};
   return ManagedObject.extend("autoServico.view.Anexo", {
-    getJustificationData: function() {},
     
     onInit: function(numTela) {
       this.tipos = [];
@@ -62,11 +62,13 @@ sap.ui.define([
     
     open: function(changedData, numTela) {
       // Remove duplicates
-      // changedData = changedData.filter((v, i, a) => a.indexOf(v) === i);
       changedData = changedData.filter(function(elem, index, self) {
         return index === self.indexOf(elem);
       });
-      
+      //make a copy of changedData
+      this.changedData = this.removeDuplicates(changedData);
+      this.numTela = numTela;
+
       this.getJustificationData();
       var oView = this._oView;
       var oControl = this._oControl;
@@ -742,6 +744,8 @@ sap.ui.define([
           
         },
         onAnexoChange: function(oEvent) {
+          //remonta a tela para refletir o tipo de anexo selecionado
+          this.montaTelaAnexo(this.changedData,this.numTela);
           var id = oEvent.getSource().getParent().getIndex();
           var anexos = this.getView().getModel("Attachments").getData();
           
@@ -752,10 +756,8 @@ sap.ui.define([
             
             if (anexos.table[id].TipoAnexo == anexos.table[i].TipoAnexo) {
               MessageBox.error("Tipo de anexo selecionado já existente");
-              const source = oEvent.getSource();
-              source.setSelectedItem( this.__selectedItem );
-              //anexos.table.splice(id, 1);
-              //this.getView().getModel("Attachments").setData(anexos);
+              anexos.table.splice(id, 1);
+              this.getView().getModel("Attachments").setData(anexos);
               return;
             }
             
