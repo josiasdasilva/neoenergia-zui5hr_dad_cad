@@ -69,7 +69,7 @@ sap.ui.define([
       this.changedData = this.removeDuplicates(changedData);
       this.numTela = numTela;
 
-      this.getJustificationData();
+      //this.getJustificationData();
       var oView = this._oView;
       var oControl = this._oControl;
       
