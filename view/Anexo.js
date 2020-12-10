@@ -752,8 +752,10 @@ sap.ui.define([
             
             if (anexos.table[id].TipoAnexo == anexos.table[i].TipoAnexo) {
               MessageBox.error("Tipo de anexo selecionado já existente");
-              anexos.table.splice(id, 1);
-              this.getView().getModel("Attachments").setData(anexos);
+              const source = oEvent.getSource();
+              source.setSelectedItem( this.__selectedItem );
+              //anexos.table.splice(id, 1);
+              //this.getView().getModel("Attachments").setData(anexos);
               return;
             }
             
