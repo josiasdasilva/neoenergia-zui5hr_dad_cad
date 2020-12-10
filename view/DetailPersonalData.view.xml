@@ -1,0 +1,229 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:t="sap.ui.table" controllerName="autoServico.view.DetailPersonalData"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Page id="personalPage" showNavButton="{device>/isPhone}" navButtonPress="onNavBack" title="{i18n>dados_pessoais}">
+		<headerContent>
+			<Button id="btnQuickViewHelp" class="sapUiSmallMarginBottom" text="" press="onPress" icon="sap-icon://message-information"/>
+		</headerContent>
+		<content>
+			<!--<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}" numberUnit="{ET_HEADER>/ORGEH}"-->
+			<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
+				numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
+				<statuses>
+					<ObjectStatus text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo" state="None"/>
+					<ObjectStatus text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""
+						id="lblAdmissao" state="None"/>
+				</statuses>
+				<ObjectAttribute text="Matrícula: {ET_HEADER>/PERNR}"/>
+				<ObjectAttribute text="" id="lblNumReq"/>
+				<ObjectAttribute text="" class="" id="lblStatus"/>
+			</ObjectHeader>
+			<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContentBusy" width="100%">
+				<l:dependents>
+					<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"></core:Fragment>
+				</l:dependents>
+			</l:VerticalLayout>
+			<VBox class="sapUiResponsiveMargin">
+				<f:SimpleForm id="formName" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>nome}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>nome_compl}" class="sapUiSmallMarginTop" required="true" id="lblFullName">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="{ET_PERS_DATA>/CNAME}" id="ipFullName" required="true" submit="onFieldChange" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L4 M4 S12"/>
+							</layoutData>
+						</Input>
+						<Button id="btnQuickViewFullName" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPress"/>
+						<Label text="{i18n>nome_social}" class="sapUiSmallMarginTop" required="false" id="lblSocialName" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbSocialname" select="onSocialNameSelect" class="sapUiSmallMarginRight" visible="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S1"/>
+							</layoutData>
+						</CheckBox>
+						<Button id="btnQuickViewSocialName" class="sapUiSmallMarginLeft" text="?" width="60px" press="onPress" visible="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S2"/>
+							</layoutData>
+						</Button>
+						<Input value="{ET_PERS_DATA>/NMSOC}" id="ipSocialName" visible="false" required="false" change="onFieldChange"
+							liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L4 M4 S12"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formSex" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>sexo}" labelSpanL="2"
+					labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>sexo}" class="sapUiSmallMarginTop" required="true" id="lblSex">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<RadioButtonGroup columns="2" class="sapUiMediumMarginBottom" id="rbgSex" select="onFieldChange">
+							<buttons>
+								<RadioButton id="rbFemale" text="{i18n>feminino}"/>
+								<RadioButton id="rbMale" text="{i18n>masculino}"/>
+							</buttons>
+						</RadioButtonGroup>
+					</f:content>
+				</f:SimpleForm>
+				<f:SimpleForm id="formAdditionalData" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="{i18n>dados_adicionais}"
+					labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Label text="{i18n>data_nascimento}" class="sapUiSmallMarginTop" required="true" id="lblBornDate">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<DatePicker id="dpBornDate" change="onDateChange" valueFormat="YYYY-MM-ddT00:00:00" placeholder="ddmmaa(ex.: 010988)"
+							value="{ET_PERS_DATA>/GBDAT}" select="onFieldChange">
+							<layoutData>
+								<l:GridData span="L3 M3 S12"/>
+							</layoutData>
+						</DatePicker>
+						<Label text="{i18n>pais_nascimento}" class="sapUiSmallMarginTop" required="true" id="lblBirthCountry">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBirthCountry" type="Text" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_COUNTRY}" value="{ET_PERS_DATA>/GBLND}"
+							app:fragment="autoServico.view.SHBirthCountry">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{LAND1}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtBirthCountry" width="100%" textAlign="Left"/>
+						<Label text="{i18n>estado}" class="sapUiSmallMarginTop" required="true" id="lblState">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipState" type="Text" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_PERS_DATA>/GBDEP}" app:fragment="autoServico.view.SHState"
+							app:field="State">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtState" width="100%" textAlign="Left"/>
+						<Label text="{i18n>local_nascimento}" class="sapUiSmallMarginTop" required="true" id="lblBirthplace">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBirthplace" type="Text" showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_REGION}" value="{ET_PERS_DATA>/GBORT}"
+							app:fragment="autoServico.view.SHBirthplace" app:field="Birthplace" liveChange="onFieldLiveChange">
+							<layoutData>
+								<l:GridData span="L6 M6 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{BLAND}"/>
+							</suggestionItems>
+						</Input>
+						<Label text="{i18n>nacionalidade}" class="sapUiSmallMarginTop" required="true" id="lblNationality">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipNationality" type="Text" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onFieldChange"
+							valueHelpRequest="handleValueHelp" suggestionItems="{ET_SH_NATIONALITY}" value="{ET_PERS_DATA>/NATIO}"
+							app:fragment="autoServico.view.SHNationality" app:field="Birthplace">
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+							<suggestionItems>
+								<core:Item text="{LAND1}"/>
+							</suggestionItems>
+						</Input>
+						<Text class="sapUiSmallMarginTop" id="txtNationality" width="100%" textAlign="Left"/>
+						<Label text="{i18n>raca_cor}" class="sapUiSmallMarginTop" required="false" id="lblRace">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<!--<Select id="slRace" items="{ path: 'ET_SH_RACE>/' }" change="onRaceSelect">-->
+						<Select id="slRace" items="{ path: 'ET_SH_RACE>/' }" change="onFieldChange">
+							<core:Item key="{ET_SH_RACE>CODE}" text="{ET_SH_RACE>RACE}"/>
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Select>
+						<Label text="{i18n>estado_civil}" class="sapUiSmallMarginTop" required="true" id="lblMaritalStatus">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Select id="slMaritalStatus" items="{ path: 'ET_SH_MARITAL_STATUS>/' }" forceSelection="true" change="onFieldChange">
+							<core:Item key="{ET_SH_MARITAL_STATUS>FAMST}" text="{ET_SH_MARITAL_STATUS>FTEXT}"/>
+							<layoutData>
+								<l:GridData span="L2 M2 S12"/>
+							</layoutData>
+						</Select>
+						<Button id="btnQuickViewMaritalStatus" class="sapUiSmallMarginBottom" text="?" width="60px" press="onPress"/>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+		</content>
+		<!--JUSTIFICATION-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustification" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment}" labelSpanL="2" labelSpanM="2"
+				adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+				<f:content>
+					<TextArea id="taJust" growing="false" change="onJustChange" maxLength="255"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--JUSTIFICATION SSG-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustificationSSG" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment_SSG}" labelSpanL="2"
+				labelSpanM="2" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+				<f:content>
+					<TextArea id="taJustSSG" growing="false" change="onJustChange" maxLength="255" editable="false"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--ATTACHMENT-->
+		<UploadCollection id="upldAttachments" maximumFilenameLength="70" maximumFileSize="5" multiple="true" change="onChange"
+			filenameLengthExceed="onFilenameLengthExceed" sameFilenameAllowed="false" fileDeleted="onFileDeleted" fileRenamed="onFileRenamed"
+			fileSizeExceed="onFileSizeExceed" showSeparators="All" instantUpload="false" uploadComplete="onUploadComplete"
+			items="{ path: 'anexo>/ET_DMS'}" fileType="gif,txt,wrd,xml,xls,tif,pdf,mpp,doc,jpg,docx,xlsx,pptx,zip,msg,eml,ppt"
+			typeMissmatch="onTypeMissmatch" visible="false">
+			<items>
+				<UploadCollectionItem documentId="{anexo>FILENAME}" fileName="{anexo>FILENAME}" mimeType="{anexo>MIME_TYPE}" url="{anexo>URL}"
+					enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false"/>
+			</items>
+		</UploadCollection>
+		
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
+				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" enabled="false"/>
+				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
+					tooltip="{i18n>enviar_tooltip}"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onCancel" icon="sap-icon://cancel" id="btnCancel" visible="false"
+					tooltip="{i18n>cancelar_tooltip}"/>
+				<Button type="Accept" text="{i18n>aprovar}" press="onApprove" icon="sap-icon://accept" id="btnApprove" visible="false"/>
+				<!--<Button type="Reject" text="{i18n>reprovar}" press="onReject" icon="sap-icon://decline" id="btnReject" visible="false"/>-->
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

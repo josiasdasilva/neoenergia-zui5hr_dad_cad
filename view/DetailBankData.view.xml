@@ -1,0 +1,283 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:t="sap.ui.table" controllerName="autoServico.view.DetailBankData">
+	<Page id="detail3Page" showNavButton="{device>/isPhone}" navButtonPress="onNavBack" title="{i18n>dados_bancarios}">
+		<content>
+			<!--<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}" numberUnit="{ET_HEADER>/ORGEH}"-->
+			<ObjectHeader binding="{ET_HEADER/'}" title="{ET_HEADER>/CNAME}" number="{ET_HEADER>/ABKRS}"
+				numberUnit="{ET_HEADER>/NAME1} - {ET_HEADER>/BTEXT}" class="corFundo">
+				<statuses>
+					<ObjectStatus text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo" state="None"/>
+					<ObjectStatus text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""
+						id="lblAdmissao" state="None"/>
+				</statuses>
+				<ObjectAttribute text="Matrícula: {ET_HEADER>/PERNR}"/>
+				<ObjectAttribute text="" id="lblNumReq"/>
+				<ObjectAttribute text="" class="" id="lblStatus"/>
+			</ObjectHeader>
+			<l:VerticalLayout class="sapUiContentPadding" id="oVerticalContentBusy" width="100%">
+				<l:dependents>
+					<core:Fragment fragmentName="autoServico.view.BusyDialog" type="XML"/>
+				</l:dependents>
+			</l:VerticalLayout>
+			<VBox class="sapUiResponsiveMargin">
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Cargo: {ET_HEADER>/STLTX}" class="" id="lblCargo"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="Data de admissão: { path: 'ET_HEADER>/HIRE_DATE', formatter:'autoServico.formatter.Formatter.dataAdmissao'}" class=""-->
+				<!--		id="lblAdmissao"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" id="lblNumReq"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<!--<l:HorizontalLayout class="">-->
+				<!--	<Label text="" class="" id="lblStatus"></Label>-->
+				<!--</l:HorizontalLayout>-->
+				<f:SimpleForm id="formMainBankData" maxContainerCols="6" editable="false" layout="ResponsiveGridLayout" title="{i18n>dados_bancarios_princ}"
+					labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+					emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2">
+					<f:content>
+						<!--						
+						<Text text="{i18n>dados_bancarios_princ_text}">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+-->
+						<Text text="">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+						<Label text="{i18n>banco_atual}" class="sapUiSmallMarginTop">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="" id="ipBankKeyMBD" editable="false" change="onFieldChange">
+							<layoutData>
+								<l:GridData span="L5 M5 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>banco}" class="sapUiSmallMarginTop" id="lblBankKeyMBD" visible="false">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Select id="slBankKeyMBD" forceSelection="false" items="{ path: 'ET_BANKLIST>/' }" change="onBankKeyMBChange" editable="false"
+							enabled="true" visible="false">
+							<core:Item key="{ET_BANKLIST>KEY}" text="{ET_BANKLIST>TEXT}"/>
+							<layoutData>
+								<l:GridData span="L5 M5 S12"/>
+							</layoutData>
+						</Select>
+						<Label text="{i18n>numero_agencia}" class="sapUiSmallMarginTop" required="true" id="lblBankAgencyMBD" textAlign="Left">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAgencyMBD" change="onFieldChange" maxLength="4" type="Text" editable="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>digito}" class="sapUiSmallMarginTop" required="false" id="lblBankAgencyMBDCod">
+							<layoutData>
+								<l:GridData span="L2 M2 S6" linebreakL="false" linebreakM="false" linebreakS="false"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAgencyMBDCod" change="onFieldChange" maxLength="1" type="Text" editable="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>conta_bancaria}" class="sapUiSmallMarginTop" required="true" id="lblBankAccountMBD">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="" width="" id="ipBankAccountMBD" change="onFieldChange" maxLength="15" type="Text" editable="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>digito}" class="sapUiSmallMarginTop" required="false" id="lblBankAccountMBDCod">
+							<layoutData>
+								<l:GridData span="L2 M2 S6" linebreakL="false" linebreakM="false" linebreakS="false"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAccountMBDCod" change="onFieldChange" maxLength="1" type="Text" editable="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>conta_salario}" class="sapUiSmallMarginTop" id="lblSalaryCount">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<CheckBox id="cbSalaryCount" select="onSalaryCountSelect" editable="true">
+							<layoutData>
+								<l:GridData span="L1 M1 S2"/>
+							</layoutData>
+						</CheckBox>
+						<Text text="{i18n>conta_salario_explicacao}" class="sapUiSmallMarginTop" id="txtSalaryCountExpl">
+							<layoutData>
+								<l:GridData span="L8 M8 S12"/>
+							</layoutData>
+						</Text>
+						<Text text="" class="sapUiSmallMarginTop">
+							<layoutData>
+								<l:GridData span="L3 M3 S1" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+						<Button text="{i18n>copydata}" visible="false" press="onPressCopy" icon="sap-icon://copy" id="btnCopy" tooltip="{i18n>copydata_tooltip}">
+							<layoutData>
+								<l:GridData span="L3 M3 S11"/>
+							</layoutData>
+						</Button>
+					</f:content>
+				</f:SimpleForm>
+				<!--Reembolso-->
+				<f:SimpleForm id="formBankingCoordSuppliers" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout"
+					title="{i18n>coordenadas_banc_forn}" labelSpanL="2" labelSpanM="3" emptySpanL="1" emptySpanM="4" columnsL="1" columnsM="1">
+					<f:content>
+						<Text text="{i18n>coordenadas_banc_forn_text}">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+						<Text text="">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Text>
+						<Label text="{i18n>banco_atual}" class="sapUiSmallMarginTop">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="" id="ipBankKeyBC" editable="false">
+							<layoutData>
+								<l:GridData span="L5 M5 S12"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>banco}" class="sapUiSmallMarginTop" required="true" id="lblBankKeyBC">
+							<layoutData>
+								<l:GridData span="L3 M3 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Select id="slBankKeyBC" forceSelection="true" change="onBankKeyBCChange">
+							<core:Item key="0019" text="Banco do Brasil"/>
+							<core:Item key="2372" text="Bradesco"/>
+							<core:Item key="1040" text="Caixa"/>
+							<core:Item key="3417" text="Itaú"/>
+							<core:Item key="2607" text="Nubank"/>
+							<core:Item key="0337" text="Santander"/>
+							<layoutData>
+								<l:GridData span="L5 M5 S12"/>
+							</layoutData>
+						</Select>
+						<Label text="{i18n>numero_agencia}" class="sapUiSmallMarginTop" required="true" id="lblBankAgencyBC">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input value="" width="" id="ipBankAgencyBC" change="onFieldChange" maxLength="4" type="Text">
+							<layoutData>
+								<l:GridData span="L2 M2 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>digito}" class="sapUiSmallMarginTop" required="false" id="lblBankAgencyBCCod">
+							<layoutData>
+								<l:GridData span="L2 M2 S6" linebreakL="false" linebreakM="false" linebreakS="false"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAgencyBCCod" change="onFieldChange" maxLength="1" type="Text">
+							<layoutData>
+								<l:GridData span="L1 M1 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>conta_bancaria}" class="sapUiSmallMarginTop" required="true" id="lblBankAccountBC">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" linebreakL="true" linebreakM="true" linebreakS="true"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAccountBC" change="onFieldChange" maxLength="15" type="Text">
+							<layoutData>
+								<l:GridData span="L2 M2 S6"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>digito}" class="sapUiSmallMarginTop" required="false" id="lblBankAccountBCCod" visible="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S6" linebreakL="false" linebreakM="false" linebreakS="false"/>
+							</layoutData>
+						</Label>
+						<Input id="ipBankAccountBCCod" change="onFieldChange" maxLength="1" type="Text" required="false" visible="false">
+							<layoutData>
+								<l:GridData span="L1 M1 S6"/>
+							</layoutData>
+						</Input>
+					</f:content>
+				</f:SimpleForm>
+				<items/>
+			</VBox>
+		</content>
+		<!--DATA EFETIVACAO-->
+		<!--<VBox class="sapUiSmallMargin">-->
+		<!--	<f:SimpleForm id="formSSGDate" editable="false" layout="ResponsiveGridLayout" title="{i18n>data_SSG}" labelSpanL="2" labelSpanM="2"-->
+		<!--		adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">-->
+		<!--		<f:content>-->
+		<!--			<DatePicker id="dpSSGDate" change="onDateChange" valueFormat="YYYY-MM-ddT00:00:00" placeholder="ddmmaa(ex.: 010317)" select="onFieldChange">-->
+		<!--				<layoutData>-->
+		<!--					<l:GridData span="L3 M3 S12"/>-->
+		<!--				</layoutData>-->
+		<!--			</DatePicker>-->
+		<!--		</f:content>-->
+		<!--	</f:SimpleForm>-->
+		<!--</VBox>-->
+		<!--JUSTIFICATION-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustification" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment}" labelSpanL="2" labelSpanM="2"
+				adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+				<f:content>
+					<TextArea id="taJust" growing="false" change="onJustChange" maxLength="255"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--JUSTIFICATION SSG-->
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="formJustificationSSG" editable="false" layout="ResponsiveGridLayout" title="{i18n>just_coment_SSG}" labelSpanL="2"
+				labelSpanM="2" adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" visible="false">
+				<f:content>
+					<TextArea id="taJustSSG" growing="false" change="onJustChange" maxLength="255" editable="false"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<!--ATTACHMENT-->
+		<UploadCollection id="upldAttachments" maximumFilenameLength="70" maximumFileSize="5" multiple="true" change="onChange"
+			filenameLengthExceed="onFilenameLengthExceed" sameFilenameAllowed="false" fileDeleted="onFileDeleted" fileRenamed="onFileRenamed"
+			fileSizeExceed="onFileSizeExceed" showSeparators="All" instantUpload="false" uploadComplete="onUploadComplete"
+			items="{ path: 'anexo>/ET_DMS'}" fileType="gif,txt,wrd,xml,xls,tif,pdf,mpp,doc,jpg,docx,xlsx,pptx,zip,msg,eml,ppt"
+			typeMissmatch="onTypeMissmatch" visible="false">
+			<items>
+				<UploadCollectionItem documentId="{anexo>FILENAME}" fileName="{anexo>FILENAME}" mimeType="{anexo>MIME_TYPE}" url="{anexo>URL}"
+					enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false"/>
+			</items>
+		</UploadCollection>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<!--<Button text="{i18n>saneamento}" press="onSanitation" icon="sap-icon://accounting-document-verification" id="btnSanity" tooltip="{i18n>saneamento_tooltip}"/>-->
+				<Button text="{i18n>anexos}" press="showDialogAnexo" icon="sap-icon://attachment" id="btnAnexo" tooltip="{i18n>anexos}" enabled="true"/>
+				<Button text="{i18n>salvar}" press="onSave" icon="sap-icon://save" id="btnSave" tooltip="{i18n>salvar_tooltip}" visible="false" enabled="false"/>
+				<Button type="Accept" text="{i18n>enviar}" press="onSend" icon="sap-icon://forward" id="btnAccept" enabled="false"
+					tooltip="{i18n>enviar_tooltip}"/>
+				<Button type="Reject" text="{i18n>cancelar}" press="onCancel" icon="sap-icon://cancel" id="btnCancel" visible="false"
+					tooltip="{i18n>cancelar_tooltip}"/>
+				<Button type="Accept" text="{i18n>aprovar}" press="onApprove" icon="sap-icon://accept" id="btnApprove" visible="false"/>
+				<!--<Button type="Reject" text="{i18n>reprovar}" press="onReject" icon="sap-icon://decline" id="btnReject" visible="false"/>-->
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,140 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Dados Pessoais">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="Após o preenchimento dos campos da atualização cadastral, será necessário anexar documento comprobatório:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Nome Completo" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Tipos de Documentos comprobatórios: Certidão de Nascimento, Certidão de casamento, Certidão de divórcio/separação, União estável, Carteira de Identidade, Carteira de Habilitação (CNH), Carteira Identidade de Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="• Comprovante de Situação Cadastral no CPF (obrigatório envio junto com uma das opções acima). Poderá ser retirado no site da Receita Federal ou qualificação do e-social.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Sexo" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Certidão de Nascimento">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Data de Nascimento (ex.: ddmmaa)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade,Carteira de Habilitação (CNH), Certidão de Nascimento">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="País Nascimento" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade, Certidão de Nascimento, Carteira Identidade de Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Estado" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade, Certidão de Nascimento, Carteira Identidade de Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Local de Nascimento" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade, Certidão de Nascimento, Carteira Identidade de Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Nacionalidade" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipos de Documentos Comprobatórios: Carteira de Identidade, Certidão de Nascimento, Carteira Identidade de Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Estado Civil" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Tipos de Documentos comprobatórios: Certidão de Nascimento, Certidão de casamento, Certidão de divórcio / separação, União estável">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

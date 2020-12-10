@@ -1,0 +1,193 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Documentos">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="Após o preenchimento dos campos da atualização cadastral, será necessário anexar documento comprobatório:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Carteira de Identidade" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Carteira de Identidade">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="CTPS" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: CTPS (Carteira de Trabalho e Previdência Social)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Conselho Regional" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Carteira de Identidade Conselho de Classe da Profissão">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Documento obrigatório somente para Médicos, Enfermeiros, Engenheiros, Contador e Advogados, desde que exercem estas funções na empresa">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Título de Eleitor" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Não é necessário envio de comprovação">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="PIS/PASEP" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Cartão do PIS ou CTPS (quando houver a informação do PIS)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Carteira de Habilitação (CNH)" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Carteira de Habilitação (CNH)">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Documento obrigatório somente para colaboradores que exercem a função de motorista na empresa.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Passaporte Estrangeiro ou Expatriado" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Passaporte">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Documento obrigatório somente para Estrangeiro ou Expatriado">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Carteira de Identidade de Estrangeiro ou Expatriado" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Carteira de Identidade Estrangeiro">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Documento obrigatório somente para Estrangeiro ou Expatriado">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Visto de Trabalho Estrangeiro ou Expatriado" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: Visto de Trabalho">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Documento obrigatório somente para Estrangeiro ou Expatriado">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text=" ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+<!--				<Text text="NIF – Número de Identificação Fiscal no Exterior - Estrangeiro ou Expatriado" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Tipo de Documento Comprobatório: NIF – Número de Identificação Fiscal no Exterior">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+				<Text text="Documento obrigatório somente para Estrangeiro ou Expatriador">
+					<layoutData>
+						<l:GridData span="L12 M12 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
+					</layoutData>
+				</Text>
+-->			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

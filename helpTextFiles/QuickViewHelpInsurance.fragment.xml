@@ -1,0 +1,136 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Seguro de Vida">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="O cadastro deve ser realizado conforme empresa:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Apólice 5556">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRAC Seguro de Vida Ouro Branco" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRFO Seguro de Vida FOB" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Grupo segurado: Todos os colaboradores, exceto Estagiários">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Custeio: Custeio conforme faixa salarial ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<!---->
+				<Text text="Apólice 5557">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRAV Seguro de Vida AVSA" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Grupo segurado: Todos os colaboradores, inclusive Estagiários">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Custeio: Custo fixo">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Diretores: 100% empresa ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<!---->
+				<Text text="GALB, GAEB, CGBR : Apólice 5560">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRGE Seguro de Vida" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Grupo segurado: Executivos e Colaboradores com Atividades Externas">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Custeio: Contributário: 50% Empr e 50% Func.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<!---->
+				<Text text="GALB, GAEB, CGBR : Apólice 5560">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRVI Seguro de Vida CG Vitória" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Grupo segurado: Todos os colaboradores de Vitória, exceto Estagiários">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Custeio: 100% empresa ">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<!---->
+				<Text text="Estagiários:" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Apólice 5560">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro: BRES Seguro de Vida Estagiários" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Grupo segurado: Estagiários e alunos do Projeto Pescar da Longos">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Custeio: 100% empresa">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

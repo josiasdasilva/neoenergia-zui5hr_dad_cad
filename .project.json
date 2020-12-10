@@ -1,0 +1,13 @@
+{
+  "mockpreview": {
+    "mockUri": "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/",
+    "metadataFilePath": "model/metadata.xml",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
+  },
+  "deploy": {
+    "destination": "CFD",
+    "name": "ZUI5HR_DAD_CAD"
+  }
+}

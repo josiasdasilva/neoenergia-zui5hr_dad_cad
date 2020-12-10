@@ -1,0 +1,37 @@
+<mvc:View controllerName="autoServico.view.Master" displayBlock="true" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Page id="master1Page" title="{i18n>master1Title}" titleAlignment="Center">
+		<content>
+			<List id="master1List" items="" mode="{device>/listMode}" noDataText="{i18n>masterListNoDataText}" select="onSelect" growing="true"
+				growingScrollToLoad="false" class="iconesLista">
+				<items>
+					<ObjectListItem title="{i18n>dados_pessoais}" number="" press="onPressPersData" id="102" type="Active" visible="false" icon="sap-icon://employee">
+						<!--<firstStatus>-->
+						<!--	<ObjectStatus text="{path:'ET_HEADER>/IM_REQUISITION_ID',formatter:'autoServico.formatter.Formatter.reqMaster'" state="Warning"/>-->
+						<!--</firstStatus>-->
+					</ObjectListItem>
+					<ObjectListItem title="{i18n>dependentes}" number="" press="onPressDependent" id="103" type="Active" visible="false"  icon="sap-icon://family-care">
+						<!--<firstStatus>-->
+						<!--	<ObjectStatus text="Req. Aberta" state="Warning"/>-->
+						<!--</firstStatus>-->
+					</ObjectListItem>
+					<ObjectListItem title="{i18n>enderecos_telefone}" press="onPressAddress" id="105" type="Active" visible="false" icon="sap-icon://addresses">
+						
+					</ObjectListItem>
+					<ObjectListItem title="{i18n>documentos}" press="onPressDocuments" id="104" type="Active" visible="false" icon="sap-icon://sap-box">
+						
+					</ObjectListItem>
+					<ObjectListItem title="{i18n>form_escolar}" press="onPressEducation" id="106" type="Active" visible="false" icon="sap-icon://study-leave">
+						
+					</ObjectListItem>
+					<ObjectListItem title="{i18n>dados_bancarios}" press="onPressBankData" id="101" type="Active" visible="false" icon="sap-icon://batch-payments" >
+
+					</ObjectListItem>	
+					
+				</items>
+			</List>
+		</content>
+		<footer>
+			<Toolbar></Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

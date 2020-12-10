@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<SelectDialog
+		title="País de nascimento"
+		class="sapUiPopupWithPadding"
+		items="{ET_SH_COUNTRY>/}"
+		search="_handleValueHelpSearch"
+		confirm="_handleValueHelpClose"
+		cancel="_handleValueHelpClose"
+		app:description="LANDX"
+		app:lblText="txtBirthCountry"
+		app:input="ipBirthCountry"
+		app:getParam="Title">
+		<StandardListItem 
+			iconDensityAware="false"
+			iconInset="false"
+			title="{ET_SH_COUNTRY>LAND1}" 
+			description="{ET_SH_COUNTRY>LANDX}" />
+	</SelectDialog>
+</core:FragmentDefinition>

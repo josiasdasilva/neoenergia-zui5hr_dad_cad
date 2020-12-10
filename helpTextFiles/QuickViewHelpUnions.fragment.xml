@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Sindicatos">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="Mensalidade:" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="O comprovante da filiação ou desfiliação ao sindicato, deverá ser arquivado no dossiê do colaborador.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Contribuição sindical já paga:" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Lançamento deverá ser realizado desde que comprovado à Área de Pessoas.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="• Para novos colaboradores:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Estes lançamentos ocorrem para os colaboradores que já contribuíram na empresa, a qual trabalhavam anteriormente durante o ano vigente. O lançamento deve ocorrer até o mês subsequente a admissão antes do fechamento da folha, caso contrário o mesmo terá o desconto e deverá ser aberto um chamado solicitando a devolução.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="• Desconto anual:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text
+					text="Ocorre no mês de março e nos casos abaixo, é possível ao colaborador não ter desconto em folha, para isso, a “contribuição sindical já paga” deve ser cadastrada nos meses de janeiro até antes do fechamento da folha de março do ano vigente:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Deve ser cadastrada nos seguintes casos:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="-Executivos; Profissionais liberais não executivos (ex.: engenheiros, médicos, psicólogos, administradores) e Advogados.">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

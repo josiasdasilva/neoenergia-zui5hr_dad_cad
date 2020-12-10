@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Seguro de Vida">
+		<content>
+			<f:SimpleForm maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="2" labelSpanM="3" emptySpanL="1"
+				emptySpanM="4" columnsL="1" columnsM="1">
+				<Text text="Tipo de Plano Estagiários:" class="underline">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Estagiários">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Apólice 5557">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro (Opção Plano): BRAV Seguro de Vida AVSA" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<!---->
+				<Text text="Estagiários demais empresas:">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Apólice 5560">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+				<Text text="Seguro (Opção Plano): BRES Seguro de Vida Estagiários" class="bold">
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Text>
+			</f:SimpleForm>
+		</content>
+		<endButton>
+			<Button text="Fechar" press="onClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

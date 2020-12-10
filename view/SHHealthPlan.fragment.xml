@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<SelectDialog
+		title="Plano de Saúde"
+		class="sapUiPopupWithPadding"
+		items="{ET_SH_PLANS>/}" 
+		search="_handleValueHelpSearch"
+		confirm="_handleValueHelpClose"
+		cancel="_handleValueHelpClose"
+		app:description="LTEXT"
+		app:input="ipHealthInsurance"
+		app:getParam="Title">
+		<StandardListItem
+			iconDensityAware="false" 
+			iconInset="false"
+			title="{ET_SH_PLANS>BPLAN}"
+			description="{ET_SH_PLANS>LTEXT}" />
+	</SelectDialog>  
+</core:FragmentDefinition>

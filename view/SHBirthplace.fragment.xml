@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<SelectDialog
+		title="Local de nascimento"
+		class="sapUiPopupWithPadding"
+		items="{ET_SH_LOCAL_OF_BIRTH>/}"
+		search="_handleValueHelpSearch"
+		confirm="_handleValueHelpClose"
+		cancel="_handleValueHelpClose"
+	    app:description="TEXT"
+		app:input="ipBirthplace"
+		app:getParam="Description">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+			title="{ET_SH_LOCAL_OF_BIRTH>REGION}"
+			description="{ET_SH_LOCAL_OF_BIRTH>TEXT}" />
+	</SelectDialog> 
+</core:FragmentDefinition>

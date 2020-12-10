@@ -1,0 +1,17 @@
+.spacerTop {
+    margin-top: 2rem;
+}
+.bold{
+    font-weight: bold;
+}
+.underline {
+    text-decoration: underline;
+}
+
+.corFundo {
+	background-color: #fff;
+}
+.iconesLista .sapUiIcon{
+    font-size: 1.5rem !important;
+    color: #000 !important;
+}
