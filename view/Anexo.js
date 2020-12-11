@@ -557,95 +557,29 @@ sap.ui.define([
           found = false;
           // Com base nos campos alterados monta tabela de anexos automaticamente
           //if (anexos.table.length > 0) {
-            for (i = 0; fieldsChanged.length > i; i++) {
-              const currentChangedField = fieldsChanged[i];
-              for (var k = 0; currentChangedField.DMS_FIELDS.length > k; k++) {
-                const dmsField = currentChangedField.DMS_FIELDS[k];
-                for (j = 0; anexos.table.length > j; j++) {
-                  if (dmsField.id == anexos.table[j].TipoAnexo) {
-                    found = true;
-                  }
-                }
-              }
-              
-              if (found == false) {
-                anexos.table.push({
-                  TipoAnexo: currentChangedField.DMS_FIELDS[0].id,
-                  New: true,
-                  Old: false,
-                  DMS_FIELDS: currentChangedField.DMS_FIELDS
-                });
-              }
-              found = false;
-            }
-            
-            
-          //} else {
-            
-            /*
-            var obj3 = [];
-            for (var i = 0; fieldsChanged.length > i; i++) {
-              
-              var obj2 = {
-                DMS_FIELDS: []
-              };
-              
-              for (var x = 0; fieldsChanged[i].DMS_FIELDS.length > x; x++) {
-                
-                if (obj3.indexOf(fieldsChanged[i].DMS_FIELDS[x].id) < 0) {
+          for (i = 0; fieldsChanged.length > i; i++) {
+            const currentChangedField = fieldsChanged[i];
+            for (var k = 0; currentChangedField.DMS_FIELDS.length > k; k++) {
+              const dmsField = currentChangedField.DMS_FIELDS[k];
+              for (j = 0; anexos.table.length > j; j++) {
+                if (dmsField.id == anexos.table[j].TipoAnexo) {
                   found = true;
-                  
-                  obj2.DMS_FIELDS.push(fieldsChanged[i].DMS_FIELDS[x]);
-                  obj3.push(fieldsChanged[i].DMS_FIELDS[x].id);
                 }
               }
-              if (found === true) {
-                
-                anexos.table.push({
-                  TipoAnexo: fieldsChanged[i].DMS_FIELDS[0].id,
-                  New: true,
-                  Old: false,
-                  DMS_FIELDS: obj2.DMS_FIELDS
-                });
-              }
-              
-              found = false;
             }
             
-            */
-            
-            /*
-            Estava travando a Tela
-            anexos.table.push({
-              TipoAnexo: fieldsChanged[0].DMS_FIELDS[0].id,
-              New: true,
-              Old: false,
-              DMS_FIELDS: fieldsChanged[0].DMS_FIELDS
-            });
+            if (found == false) {
+              anexos.table.push({
+                TipoAnexo: currentChangedField.DMS_FIELDS[0].id,
+                New: true,
+                Old: false,
+                DMS_FIELDS: currentChangedField.DMS_FIELDS
+              });
+            }
             found = false;
-            
-            for (i = 0; anexos.table.length > i; i++) {
-              for (j = 0; fieldsChanged.length > j; j++) {
-                for (var x = 0; fieldsChanged[j].DMS_FIELDS.length > x; x++) {
-                  
-                  if (anexos.table[i].TipoAnexo == fieldsChanged[j].DMS_FIELDS[x].id) {
-                    found = true;
-                  }
-                }
-                if (found === false) {
-                  anexos.table.push({
-                    TipoAnexo: fieldsChanged[j].DMS_FIELDS[0].id,
-                    New: true,
-                    Old: false,
-                    DMS_FIELDS: fieldsChanged[j].DMS_FIELDS
-                  });
-                }
-                found = false;
-              }
-              
-            }*/
-          //}
+          }
           
+          //adiciona campo obrigatório para alteração de nome
           var nomeAlt = false;
           
           if (numTela == req_subtype.dados_pessoais) {
@@ -659,7 +593,7 @@ sap.ui.define([
             if (nomeAlt === true) {
               found = false;
               for (i = 0; anexos.table.length > i; i++) {
-                if (anexos.table[i].DMS_FIELDS[0].id == "SITUACAOCADASTRAL") {
+                if (anexos.table[i].TipoAnexo == "SITUACAOCADASTRAL") {
                   found = true;
                 }
               }
