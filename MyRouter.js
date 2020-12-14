@@ -44,6 +44,9 @@ sap.ui.core.routing.Router.extend("autoServico.MyRouter", {
 		oSplitApp.addPage(oView, oOptions.isMaster);
 		oSplitApp.to(oView.getId(), oOptions.transition || "show", oOptions.data);
 
+		//remove previous view from splitApp
+		//const oldView = this.getView(oOptions.currentView, oOptions.targetViewType);
+		//splitApp.removeDetailPage(oOptions.currentView.sViewName);
 	},
 
 	backWithoutHash: function(oCurrentView, bIsMaster) {

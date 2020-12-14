@@ -36,6 +36,11 @@ sap.ui.define([
 
 			this.initializeState();
 		},
+
+		onAfterShow: function (oEvent) {
+			debugger;
+			this.initializeState();
+		},
 		
 		initializeState: function () {
 			this.fGetBlock();
