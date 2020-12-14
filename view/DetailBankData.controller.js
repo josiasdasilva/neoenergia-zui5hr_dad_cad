@@ -41,7 +41,7 @@ sap.ui.define([
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function(ref) {
-			ref.getBlock();
+			ref.fGetBlock();
 			ref.getView().byId("cbSalaryCount").fireSelect();
 			ref.getAttachment();
 		},
