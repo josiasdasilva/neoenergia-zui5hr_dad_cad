@@ -43,10 +43,7 @@ sap.ui.core.routing.Router.extend("autoServico.MyRouter", {
 		var oView = this.getView(oOptions.targetViewName, oOptions.targetViewType);
 		oSplitApp.addPage(oView, oOptions.isMaster);
 		oSplitApp.to(oView.getId(), oOptions.transition || "show", oOptions.data);
-		//destroy current view so that next time the user navigates to it
-		//the initial state is displayed
-		const currentView = this.getView(oOptions.currentView, oOptions.currentViewType);
-		currentView.destroy();
+
 	},
 
 	backWithoutHash: function(oCurrentView, bIsMaster) {
