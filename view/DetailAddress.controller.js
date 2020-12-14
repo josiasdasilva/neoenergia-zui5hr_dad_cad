@@ -34,14 +34,14 @@ sap.ui.define([
 			this.fSetHeader();
 			this.fSetGlobalInformation();
 			const that = this;
-			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 			//this.initializeState();
 		},
 
-		initializeState: function () {
-			this.fGetBlock();
-			this.fValidaCompany();
-			this.getAttachment();
+		initializeState: function (ref) {
+			ref.fGetBlock();
+			ref.fValidaCompany();
+			ref.getAttachment();
 		},
 		//	--------------------------------------------
 		//	onFieldLiveChange

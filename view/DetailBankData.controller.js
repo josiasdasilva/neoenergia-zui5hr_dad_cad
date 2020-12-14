@@ -38,12 +38,12 @@ sap.ui.define([
 			//this.getAttachment();
 
 			const that = this;
-			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
-		initializeState: function() {
-			this.getBlock();
-			this.getView().byId("cbSalaryCount").fireSelect();
-			this.getAttachment();
+		initializeState: function(ref) {
+			ref.getBlock();
+			ref.getView().byId("cbSalaryCount").fireSelect();
+			ref.getAttachment();
 		},
 		//	--------------------------------------------
 		//	fGetBlock

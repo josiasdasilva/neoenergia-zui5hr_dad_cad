@@ -37,14 +37,14 @@ sap.ui.define([
 			//this.getView().byId("btnAccept").setEnabled(true);
 			//this.getAttachment();
 			const that = this;
-			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
-		initializeState: function () {
-			this.fGetBlock();
-			this.fValidaCompany();
-			this.getView().byId("btnSave").setVisible(false);
-			this.getView().byId("btnAccept").setEnabled(true);
-			this.getAttachment();
+		initializeState: function (ref) {
+			ref.fGetBlock();
+			ref.fValidaCompany();
+			ref.getView().byId("btnSave").setVisible(false);
+			ref.getView().byId("btnAccept").setEnabled(true);
+			ref.getAttachment();
 		},
 		// // --------------------------------------------
 		// // fCheckChange

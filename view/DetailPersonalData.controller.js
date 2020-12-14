@@ -39,11 +39,11 @@ sap.ui.define([
 			//this.fGetBlock();
 			//this.getAttachment();
 			const that = this;
-			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
-		initializeState: function () {
-			this.fGetBlock();
-			this.getAttachment();
+		initializeState: function (ref) {
+			ref.fGetBlock();
+			ref.getAttachment();
 		},
 		onChange:function(){
 		},
