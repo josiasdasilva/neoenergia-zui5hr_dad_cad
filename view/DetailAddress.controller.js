@@ -33,12 +33,21 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			this.fGetBlock();
-			this.fValidaCompany();
-			// this.fCheckSaneaBtn("105");
-			this.getAttachment();
+
+			this.initializeState();
+			const router = sap.ui.core.UIComponent.getRouterFor(this);
+			router.attachRoutePatternMatched(this._handleRouteMatched, this);
 		},
 
+		_handleRouteMatched: function(oEvent) { 
+			this.initializeState();
+		},	
+		
+		initializeState: function () {
+			this.fGetBlock();
+			this.fValidaCompany();
+			this.getAttachment();
+		},
 		//	--------------------------------------------
 		//	onFieldLiveChange
 		//	--------------------------------------------		
