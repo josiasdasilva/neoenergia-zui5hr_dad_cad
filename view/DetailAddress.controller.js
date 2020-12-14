@@ -30,17 +30,12 @@ sap.ui.define([
 			this.getView().setModel(oAtt, "Attachments");
 
 			//this.getRouter().attachRouteMatched(this.onRouteMatched, this);
-			this.getRouter().attachRoutePatternMatched(this._localRouteMatched, this);
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
 
 			this.initializeState();
 		},
-
-		_localRouteMatched: function(oEvent) { 
-			this.initializeState();
-		},	
 		
 		initializeState: function () {
 			this.fGetBlock();
