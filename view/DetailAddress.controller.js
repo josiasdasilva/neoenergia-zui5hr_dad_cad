@@ -34,15 +34,10 @@ sap.ui.define([
 			this.fSetHeader();
 			this.fSetGlobalInformation();
 			const that = this;
-			this.getView().addEventDelegate({onAfterShow: function(oEvent){that.initializeState()}}, this.getView());
-			this.initializeState();
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+			//this.initializeState();
 		},
 
-		_onAfterShow: function (oEvent) {
-			debugger;
-			this.initializeState();
-		},
-		
 		initializeState: function () {
 			this.fGetBlock();
 			this.fValidaCompany();
