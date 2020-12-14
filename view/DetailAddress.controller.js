@@ -33,8 +33,8 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-
-			this.getView().addEventDelegate({onAfterShow: function(oEvent){this.initializeState()}}, this.getView());
+			const that = this;
+			this.getView().addEventDelegate({onAfterShow: function(oEvent){that.initializeState()}}, this.getView());
 			this.initializeState();
 		},
 
