@@ -828,6 +828,7 @@ sap.ui.define([
 			//SUCESSO
 			function fSuccess(oEvent) {
 				oGlobalData.REQUISITION_ID = oEvent.EX_REQUISITION_ID;
+				oGlobalData.IM_REQUISITION_ID = oEvent.EX_REQUISITION_ID;
 
 				switch (action) {
 				case "A":
