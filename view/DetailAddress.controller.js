@@ -29,7 +29,7 @@ sap.ui.define([
 			});
 			this.getView().setModel(oAtt, "Attachments");
 
-			this.getRouter().attachRouteMatched(this.onRouteMatched, this);
+			//this.getRouter().attachRouteMatched(this.onRouteMatched, this);
 			this.getRouter().attachRouteMatched(this._localRouteMatched, this);
 			this.fSearchHelps();
 			this.fSetHeader();
