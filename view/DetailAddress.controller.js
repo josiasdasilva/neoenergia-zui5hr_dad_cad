@@ -22,7 +22,7 @@ sap.ui.define([
 			} else {
 				var oEventBus = this.getEventBus();
 			}
-
+			
 			this.changedData = [];
 			var oAtt = new JSONModel({
 				table: []
@@ -34,10 +34,11 @@ sap.ui.define([
 			this.fSetHeader();
 			this.fSetGlobalInformation();
 
+			this.getView().addEventDelegate({onAfterShow: function(oEvent){this.initializeState()}}, this.getView());
 			this.initializeState();
 		},
 
-		onAfterShow: function (oEvent) {
+		_onAfterShow: function (oEvent) {
 			debugger;
 			this.initializeState();
 		},
