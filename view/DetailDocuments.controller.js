@@ -31,14 +31,21 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
+			//this.fGetBlock();
+			//this.fValidaCompany();
+			//this.getView().byId("btnSave").setVisible(false);
+			//this.getView().byId("btnAccept").setEnabled(true);
+			//this.getAttachment();
+			const that = this;
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+		},
+		initializeState: function () {
 			this.fGetBlock();
 			this.fValidaCompany();
 			this.getView().byId("btnSave").setVisible(false);
 			this.getView().byId("btnAccept").setEnabled(true);
 			this.getAttachment();
-			
 		},
-
 		// // --------------------------------------------
 		// // fCheckChange
 		// // -------------------------------------------- 

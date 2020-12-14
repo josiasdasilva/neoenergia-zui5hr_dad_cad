@@ -32,10 +32,15 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
+			//this.fGetBlock();
+			//this.getAttachment();
+			const that = this;
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+		},
+		initializeState: function () {
 			this.fGetBlock();
 			this.getAttachment();
 		},
-
 		//	--------------------------------------------
 		//	fCheck24Years
 		//	--------------------------------------------		

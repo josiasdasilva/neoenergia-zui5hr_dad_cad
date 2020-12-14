@@ -33,11 +33,18 @@ sap.ui.define([
 			this.getRouter().attachRouteMatched(this.onRouteMatched, this);
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			this.fGetBlock();
+			//this.fGetBlock();
+			//this.getView().byId("cbSalaryCount").fireSelect();
+			//this.getAttachment();
+
+			const that = this;
+			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState()}}, this.getView());
+		},
+		initializeState: function() {
+			this.getBlock();
 			this.getView().byId("cbSalaryCount").fireSelect();
 			this.getAttachment();
 		},
-
 		//	--------------------------------------------
 		//	fGetBlock
 		//	--------------------------------------------		
