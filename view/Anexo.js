@@ -304,17 +304,18 @@ sap.ui.define([
         }
       },
       clearAttachments: function () {
-        const anexos = new sap.ui.model.json.JSONModel({
-          table: []
-        });
-        const anexosDelete = new sap.ui.model.json.JSONModel({
-          table: []
-        });
-
         oModelAtt = this.getView().getModel("Attachments");
         oModelDelete = this.getView().getModel("AttDelete");
-        if(oModelAtt) oModelAtt.setData(anexosDelete);
-        if(oModelDelete) oModelDelete.setData(anexos);
+        if(oModelAtt) {
+          oModelAtt.setData({
+            table: []
+          });
+        } 
+        if(oModelDelete){
+          oModelDelete.setData({
+            table: []
+          });
+        } 
       },
       saveAttachment: function(reqNumber, status) {
         var that = this;
@@ -530,9 +531,11 @@ sap.ui.define([
             DMS_FIELDS: []
           };
           
-          for (var x = 0; anexos.table.length > x; x++) {
-            if (anexos.table[x].Old == true) {
-              anexos.table[x].DMS_FIELDS = this.tipos;
+          if(anexos && anexos.table && anexos.table.length){
+            for (var x = 0; anexos.table.length > x; x++) {
+              if (anexos.table[x].Old == true) {
+                anexos.table[x].DMS_FIELDS = this.tipos;
+              }
             }
           }
           
