@@ -52,6 +52,7 @@ sap.ui.define([
 			
 			ref.fGetBlock();
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		onChange:function(){
 		},

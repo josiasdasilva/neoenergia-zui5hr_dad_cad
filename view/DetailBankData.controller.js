@@ -48,10 +48,11 @@ sap.ui.define([
 			if (oDialog) {
 				oDialog.clearAttachments();
 			}
-			
+
 			ref.fGetBlock();
 			ref.getView().byId("cbSalaryCount").fireSelect();
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		//	--------------------------------------------
 		//	fGetBlock

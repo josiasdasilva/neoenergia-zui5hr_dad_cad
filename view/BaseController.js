@@ -9,7 +9,8 @@ sap.ui.define([
 	return Controller.extend("autoServico.view.BaseController", {
 
 		oClonedObject: {},
-		modelHasChanged: false,
+    modelHasChanged: false,
+    invalidFields: [],
 
 		// onBeforeRendering: function() {
 		// 	console.log("Before RENDERING *** BASE CONTROLLER");
@@ -1376,7 +1377,13 @@ sap.ui.define([
 				}
 			});
 		},
-
+    fClearValueStates: function () {
+      for (let i = 0; i < this.invalidFields.length; i++) {
+        const invalidFIeld = this.invalidFields[i];
+        this.getView().byId(invalidFIeld).setValueState(sap.ui.core.ValueState.None);
+      }
+      this.invalidFields = [];
+    },
 		//	--------------------------------------------
 		//	fMessage
 		//	--------------------------------------------
@@ -1392,7 +1399,14 @@ sap.ui.define([
 			this.getView().byId(field).setValueStateText(message);
 
 			//Set message in the field with the type and text
-			this.getView().byId(field).setValueState(sap.ui.core.ValueState[type]);
+      this.getView().byId(field).setValueState(sap.ui.core.ValueState[type]);
+      
+      //keep control of invalid fields
+      if(type === sap.ui.core.ValueState.None){
+        this.invalidFields = this.invalidFields.filter((invalidField)=>invalidField!==field);
+      }else{
+        if(this.invalidFields.indexOf(field)=== -1) this.invalidFields.push(field);
+      }
 		},
 
 		//	--------------------------------------------

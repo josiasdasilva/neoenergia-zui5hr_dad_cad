@@ -48,6 +48,7 @@ sap.ui.define([
 			
 			ref.fGetBlock();
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		//	--------------------------------------------
 		//	fCheck24Years

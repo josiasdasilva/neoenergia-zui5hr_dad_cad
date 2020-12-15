@@ -53,6 +53,7 @@ sap.ui.define([
 			ref.getView().byId("btnSave").setVisible(false);
 			ref.getView().byId("btnAccept").setEnabled(true);
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		// // --------------------------------------------
 		// // fCheckChange

@@ -50,6 +50,7 @@ sap.ui.define([
 			ref.fGetBlock();
 			ref.fValidaCompany();
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		//	--------------------------------------------
 		//	onFieldLiveChange

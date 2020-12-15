@@ -48,6 +48,7 @@ sap.ui.define([
 			ref.fGetLog();
 			ref.fValidaCompany();
 			ref.getAttachment();
+			ref.fClearValueStates();
 		},
 		//	--------------------------------------------
 		//	fGetBlock
