@@ -40,6 +40,14 @@ sap.ui.define([
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function (ref) {
+			const sDialogName = 'Anexo';
+			ref.mDialogs = ref.mDialogs || {};
+			const oDialog = ref.mDialogs[sDialogName];
+
+			if (oDialog) {
+				oDialog.clearAttachments();
+			}
+			
 			ref.fGetBlock();
 			ref.fValidaCompany();
 			ref.getView().byId("btnSave").setVisible(false);

@@ -303,6 +303,16 @@ sap.ui.define([
           oDialog.close();
         }
       },
+      clearAttachments: function () {
+        const anexos = new sap.ui.model.json.JSONModel({
+          table: []
+        });
+        const anexosDelete = new sap.ui.model.json.JSONModel({
+          table: []
+        });
+        this.getView().getModel("AttDelete").setData(anexosDelete);
+        this.getView().getModel("Attachments").setData(anexos);
+      },
       saveAttachment: function(reqNumber, status) {
         var that = this;
         var oDialog = that.getView().byId("BusyDialog");
