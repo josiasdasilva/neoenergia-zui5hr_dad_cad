@@ -246,7 +246,7 @@
 								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
 							</layoutData>
 						</Label>
-						<Input value="{ET_ADDRESS>/TEL_EXTENS}" maxLength="10" width="10rem" id="ipRamal" placeholder="RAMAL" liveChange="onFieldLiveChange" visible="true">
+						<Input value="{ET_ADDRESS>/TEL_EXTENS}" maxLength="10" width="10rem" id="ipRamal" placeholder="RAMAL" visible="true">
 							<layoutData>
 								<l:GridData span="L10 M10 S12"/>
 							</layoutData>
@@ -256,7 +256,7 @@
 								<l:GridData span="L2 M2 S12" linebreakL="true" linebreakM="true" linebreakS="true"/>
 							</layoutData>
 						</Label>
-						<Input value="{ET_ADDRESS>/EMAIL}" width="20rem" id="ipEmail" placeholder="email@email.com" type="Email" liveChange="onFieldLiveChange">
+						<Input value="{ET_ADDRESS>/EMAIL}" width="20rem" id="ipEmail" placeholder="email@email.com" type="Email">
 							<layoutData>
 								<l:GridData span="L10 M10 S12"/>
 							</layoutData>
