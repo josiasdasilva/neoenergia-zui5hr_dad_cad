@@ -310,8 +310,11 @@ sap.ui.define([
         const anexosDelete = new sap.ui.model.json.JSONModel({
           table: []
         });
-        this.getView().getModel("AttDelete").setData(anexosDelete);
-        this.getView().getModel("Attachments").setData(anexos);
+
+        oModelAtt = this.getView().getModel("Attachments");
+        oModelDelete = this.getView().getModel("AttDelete");
+        if(oModelAtt) oModelAtt.setData(anexosDelete);
+        if(oModelDelete) oModelDelete.setData(anexos);
       },
       saveAttachment: function(reqNumber, status) {
         var that = this;
