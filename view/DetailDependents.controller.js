@@ -34,11 +34,11 @@ sap.ui.define([
 			this.fSetGlobalInformation();
 			//this.fGetBlock();
 			//this.getAttachment();
-			const that = this;
+			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function (ref) {
-			const sDialogName = 'Anexo';
+			var sDialogName = 'Anexo';
 			if(ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].destroy();
 			}

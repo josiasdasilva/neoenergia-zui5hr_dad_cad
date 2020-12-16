@@ -9,7 +9,7 @@ sap.ui.define([
   // ], function (ManagedObject, MessageBox, Utilities, History, connections) {
 ], function(ManagedObject, MessageBox, History, Filter, JSONModel) {
   
-  const req_subtype = {
+  var req_subtype = {
     dados_bancarios: '101',
     dados_pessoais: '102',
     dependentes: '103',
@@ -38,7 +38,7 @@ sap.ui.define([
       this._oDialog.destroy();
     },
     
-    constructor: function(oView) {
+    varructor: function(oView) {
       this._oView = oView;
       this._oControl = sap.ui.xmlfragment(oView.getId(), "autoServico.view.Anexo", this);
       this._bInit = false;
@@ -574,9 +574,9 @@ sap.ui.define([
           // Com base nos campos alterados monta tabela de anexos automaticamente
           //if (anexos.table.length > 0) {
           for (i = 0; fieldsChanged.length > i; i++) {
-            const currentChangedField = fieldsChanged[i];
+            var currentChangedField = fieldsChanged[i];
             for (var k = 0; currentChangedField.DMS_FIELDS.length > k; k++) {
-              const dmsField = currentChangedField.DMS_FIELDS[k];
+              var dmsField = currentChangedField.DMS_FIELDS[k];
               for (j = 0; anexos.table.length > j; j++) {
                 if (dmsField.id == anexos.table[j].TipoAnexo) {
                   found = true;
