@@ -958,7 +958,7 @@ sap.ui.define([
 							this.mDialogs = this.mDialogs || {};
 							var oDialog = this.mDialogs[sDialogName];
 							
-							if (!oDialog) {
+							if (!oDialog || oDialog === {}) {
 								oDialog = new Anexo(this.getView()); //Justificar ausencia
 								
 								this.mDialogs[sDialogName] = oDialog;
