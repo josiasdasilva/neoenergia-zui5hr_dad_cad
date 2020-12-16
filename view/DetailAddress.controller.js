@@ -33,7 +33,7 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			this.initializeState();
+			this.initializeState(this);
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 			//this.initializeState();

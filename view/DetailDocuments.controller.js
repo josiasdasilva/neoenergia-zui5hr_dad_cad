@@ -36,7 +36,7 @@ sap.ui.define([
 			//this.getView().byId("btnSave").setVisible(false);
 			//this.getView().byId("btnAccept").setEnabled(true);
 			//this.getAttachment();
-			this.initializeState();
+			this.initializeState(this);
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},

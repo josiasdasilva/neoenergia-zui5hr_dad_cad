@@ -32,7 +32,7 @@ sap.ui.define([
 			//this.fGetLog();
 			//this.fValidaCompany();
 			//this.getAttachment();
-			this.initializeState();
+			this.initializeState(this);
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
