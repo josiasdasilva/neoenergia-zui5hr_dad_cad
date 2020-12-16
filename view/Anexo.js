@@ -668,7 +668,7 @@ sap.ui.define([
           var anexos = this.getView().getModel("Attachments").getData();
           var anexosDelete = this.getView().getModel("AttDelete");
           
-          if (anexos.table.legnth < 1) {
+          if (anexos.table.length < 1) {
             return;
           }
           

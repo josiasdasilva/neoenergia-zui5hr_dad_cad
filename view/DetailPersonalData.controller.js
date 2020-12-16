@@ -46,6 +46,7 @@ sap.ui.define([
 			var sDialogName = 'Anexo';
 			if(ref.mDialogs && ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].clearAttachments();
+				ref.mDialogs[sDialogName].changedData = {};
 			}
 			ref.fGetBlock();
 			ref.getAttachment();
