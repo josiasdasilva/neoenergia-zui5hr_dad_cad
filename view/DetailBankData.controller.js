@@ -41,7 +41,11 @@ sap.ui.define([
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function(ref) {
-			ref.mDialogs = {};
+			const sDialogName = 'Anexo';
+			if(ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
+				ref.mDialogs[sDialogName].destroy();
+			}
+			ref.mDialogs[sDialogName] = {};
 			ref.fGetBlock();
 			ref.getView().byId("cbSalaryCount").fireSelect();
 			ref.getAttachment();

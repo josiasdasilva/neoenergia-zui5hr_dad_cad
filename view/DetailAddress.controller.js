@@ -39,7 +39,11 @@ sap.ui.define([
 		},
 
 		initializeState: function (ref) {
-			ref.mDialogs = {};
+			const sDialogName = 'Anexo';
+			if(ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
+				ref.mDialogs[sDialogName].destroy();
+			}
+			ref.mDialogs[sDialogName] = {};
 			ref.fGetBlock();
 			ref.fValidaCompany();
 			ref.getAttachment();
