@@ -306,6 +306,14 @@ sap.ui.define([
       clearAttachments: function () {
         oModelAtt = this.getView().getModel("Attachments");
         oModelDelete = this.getView().getModel("AttDelete");
+        oAttsTable = this.getView().byId('tAnexos').getRows();
+        if(oAttsTable && oAttsTable.length){
+          for (let i = 0; i < oAttsTable.length; i++) {
+            const oAttsRow = oAttsTable[i];
+            
+            oAttsRow.getCells()[1].getItems()[0].setValue("")
+          }
+        }
         if(oModelAtt) {
           oModelAtt.setData({
             table: []
