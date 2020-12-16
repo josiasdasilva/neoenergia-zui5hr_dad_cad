@@ -43,8 +43,8 @@ sap.ui.define([
 			var sDialogName = 'Anexo';
 			if(ref.mDialogs && ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].destroy();
+				ref.mDialogs[sDialogName] = {};
 			}
-			ref.mDialogs[sDialogName] = {};
 			ref.fGetBlock();
 			ref.fValidaCompany();
 			ref.getView().byId("btnSave").setVisible(false);
