@@ -311,11 +311,13 @@ sap.ui.define([
             table: []
           });
         } 
+        oModelAtt.refresh();
         if(oModelDelete){
           oModelDelete.setData({
             table: []
           });
         } 
+        oModelDelete.refresh();
       },
       saveAttachment: function(reqNumber, status) {
         var that = this;
