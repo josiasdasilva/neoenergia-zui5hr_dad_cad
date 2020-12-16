@@ -43,6 +43,7 @@ sap.ui.define([
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function (ref) {
+			this.changedData = [];
 			var sDialogName = 'Anexo';
 			if(ref.mDialogs && ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].clearAttachments();
