@@ -310,14 +310,14 @@ sap.ui.define([
           oModelAtt.setData({
             table: []
           });
+          oModelAtt.refresh();
         } 
-        oModelAtt.refresh();
         if(oModelDelete){
           oModelDelete.setData({
             table: []
           });
+          oModelDelete.refresh();
         } 
-        oModelDelete.refresh();
       },
       saveAttachment: function(reqNumber, status) {
         var that = this;
