@@ -43,11 +43,11 @@ sap.ui.define([
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function (ref) {
-			var sDialogName = 'Anexo';
+			/* var sDialogName = 'Anexo';
 			if(ref.mDialogs && ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].destroy();
 				ref.mDialogs[sDialogName] = {};
-			}
+			} */
 			ref.fGetBlock();
 			ref.getAttachment();
 			ref.fClearValueStates();
