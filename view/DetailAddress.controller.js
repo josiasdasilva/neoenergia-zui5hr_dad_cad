@@ -33,17 +33,18 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
+			this.initializeState();
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 			//this.initializeState();
 		},
 
 		initializeState: function (ref) {
-			/* var sDialogName = 'Anexo';
+			var sDialogName = 'Anexo';
 			if(ref.mDialogs && ref.mDialogs[sDialogName] && ref.mDialogs[sDialogName] !== {}){
 				ref.mDialogs[sDialogName].destroy();
 				ref.mDialogs[sDialogName] = {};
-			} */
+			}
 			ref.fGetBlock();
 			ref.fValidaCompany();
 			ref.getAttachment();
