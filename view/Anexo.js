@@ -38,7 +38,7 @@ sap.ui.define([
       this._oDialog.destroy();
     },
     
-    varructor: function(oView) {
+    constructor: function(oView) {
       this._oView = oView;
       this._oControl = sap.ui.xmlfragment(oView.getId(), "autoServico.view.Anexo", this);
       this._bInit = false;
