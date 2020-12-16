@@ -39,8 +39,8 @@ sap.ui.define([
 			this.fGetBlock();
 			this.getAttachment();
 			
-			var that = this;
-			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
+			//var that = this;
+			//this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
 		initializeState: function (ref) {
 			/* var sDialogName = 'Anexo';

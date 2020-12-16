@@ -408,7 +408,7 @@ sap.ui.define([
           var that = this;
           var path = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/";
           var oModelData = new sap.ui.model.odata.ODataModel(path); //this.getView().getModel().sServiceUrl);
-          var requisition = this.getView().getModel("ET_GLOBAL_DATA").IM_REQUISITION_ID;
+          var requisition = that.getView().getModel("ET_GLOBAL_DATA").IM_REQUISITION_ID;
           var oGlobalData = that.getView().getModel("ET_GLOBAL_DATA");
           // var oModel = oBindingContext.getObject();
           
