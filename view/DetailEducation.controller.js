@@ -28,11 +28,11 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			//this.fGetBlock();
-			//this.fGetLog();
-			//this.fValidaCompany();
-			//this.getAttachment();
-			this.initializeState(this);
+			this.fGetBlock();
+			this.fGetLog();
+			this.fValidaCompany();
+			this.getAttachment();
+			
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},

@@ -36,9 +36,9 @@ sap.ui.define([
 			this.fSetHeader();
 			this.fSetGlobalInformation();
 			this.fSearchHelps();
-			//this.fGetBlock();
-			//this.getAttachment();
-			this.initializeState(this);
+			this.fGetBlock();
+			this.getAttachment();
+			
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},

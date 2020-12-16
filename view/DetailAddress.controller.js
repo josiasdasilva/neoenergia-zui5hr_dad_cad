@@ -33,7 +33,10 @@ sap.ui.define([
 			this.fSearchHelps();
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			this.initializeState(this);
+			this.fGetBlock();
+			this.fValidaCompany();
+			this.getAttachment();
+			
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 			//this.initializeState();

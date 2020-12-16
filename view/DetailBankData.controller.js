@@ -33,10 +33,10 @@ sap.ui.define([
 			this.getRouter().attachRouteMatched(this.onRouteMatched, this);
 			this.fSetHeader();
 			this.fSetGlobalInformation();
-			//this.fGetBlock();
-			//this.getView().byId("cbSalaryCount").fireSelect();
-			//this.getAttachment();
-			this.initializeState(this);
+			this.fGetBlock();
+			this.getView().byId("cbSalaryCount").fireSelect();
+			this.getAttachment();
+			
 			var that = this;
 			this.getView().addEventDelegate({onBeforeShow: function(oEvent){that.initializeState(that)}}, this.getView());
 		},
