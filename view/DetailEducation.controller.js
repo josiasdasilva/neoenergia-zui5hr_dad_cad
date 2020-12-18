@@ -43,8 +43,8 @@ sap.ui.define([
 				ref.mDialogs[sDialogName].clearAttachments();
 				ref.mDialogs[sDialogName].changedData = {};
 			}
-			ref.getView().byId('txtCertificado').setValue('');
-			ref.getView().byId('txtEstabelecimento').setValue('');
+			ref.getView().byId("txtEstabelecimento").setText();
+			ref.getView().byId("txtCertificado").setText();
 
 			ref.fGetBlock();
 			ref.fGetLog();
