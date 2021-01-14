@@ -798,7 +798,7 @@ sap.ui.define([
 					
 					if (this.fValidInputFields() === true) {
 						this.handleErrorMessageBoxPress();
-					} else if (!attachment && (obligAttach || this.obligatoryChanged)) {
+					} else if (!attachment && (obligAttach || this.obligatoryChanged) && this.changedData.length) {
 						this.handleErrorMessageAttachment();
 					} else { //if ((obligAttach === false || attachment === true) && this.obligatoryChanged === false)  {
 						MessageBox.confirm(

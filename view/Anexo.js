@@ -68,7 +68,7 @@ sap.ui.define([
       //make a copy of changedData
       this.changedData = this.removeDuplicates(changedData);
       this.numTela = numTela;
-
+      
       //this.getJustificationData();
       var oView = this._oView;
       var oControl = this._oControl;
@@ -273,8 +273,127 @@ sap.ui.define([
               dados = "";
               // Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
               // dados += uploadCollection.getValue() + ";DOA" + req + action + number of files + status + PERNR
-              dados += uploadCollection.getValue() + ";DOA;" + req + ";STATUS;" + anexos.length + ";" + status + ";" + that.getView().getModel(
-                "ET_HEADER").getData().PERNR;
+              dados += uploadCollection.getValue() + ";DOA;" + req + ";STATUS;" + anexos.length + ";" + status + ";" + that.getView().getModel("ET_HEADER").getData().PERNR;
+              
+              if (uploadCollection) {
+                uploadCollection.destroyHeaderParameters();
+                uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
+                  name: "slug",
+                  value: dados
+                }));
+                
+                uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
+                  name: "x-csrf-token",
+                  value: oToken
+                }));
+                
+                uploadCollection.setSendXHR(true);
+                uploadCollection.setUploadUrl("/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/AnexoSet");
+                uploadCollection.upload();
+                calledOnce = true;
+              }
+            }
+            if(calledOnce) break;
+          }
+          oDialog.close();
+        });
+      } catch (oException) {
+        jQuery.sap.log.error("Erro Conexão" + oException.message);
+        oDialog.close();
+      }
+    },
+    clearAttachments: function () {
+      oModelAtt = this.getView().getModel("Attachments");
+      oModelDelete = this.getView().getModel("AttDelete");
+      oAttsTable = this.getView().byId('tAnexos').getRows();
+      if(oAttsTable && oAttsTable.length){
+        for (let i = 0; i < oAttsTable.length; i++) {
+          const oAttsRow = oAttsTable[i];
+          
+          oAttsRow.getCells()[1].getItems()[0].setValue("")
+        }
+      }
+      if(oModelAtt) {
+        oModelAtt.setData({
+          table: []
+        });
+        oModelAtt.refresh();
+      } 
+      if(oModelDelete){
+        oModelDelete.setData({
+          table: []
+        });
+        oModelDelete.refresh();
+      } 
+    },
+    saveAttachment: function(reqNumber, status) {
+      var that = this;
+      var oDialog = that.getView().byId("BusyDialog");
+      
+      try {
+        oDialog.open();
+        
+        var that = this;
+        
+        this.deleteAttachment();
+        
+        /**
+        * **************To Fetch CSRF Token******************
+        */
+        // var a = "/Yourservice URL or Metadata URL ";
+        var a = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV";
+        var f = {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "Content-Type": "application/atom+xml",
+            //"Content-Type" : "application/xml",
+            DataServiceVersion: "2.0",
+            "X-CSRF-Token": "Fetch",
+          },
+          requestUri: a,
+          method: "GET"
+        };
+        var oHeaders;
+        var oModel = new sap.ui.model.odata.ODataModel(a, true);
+        var dados = "";
+        sap.ui.getCore().setModel(oModel);
+        OData.request(f, function(data, oSuccess) {
+          
+          var oToken = oSuccess.headers['x-csrf-token'];
+          /**
+          * ValidaÁao para o caso do navegador ser o Firefox/IE *
+          */
+          if (oToken == null) {
+            oToken = oSuccess.headers['X-CSRF-Token'];
+          }
+          // that.getView().byId('tAnexos').getRows()[0].getCells()[1];
+          
+          var anexos = that.getView().getModel("Attachments").getData().table;
+          if (anexos.length == 0) {
+            oDialog.close();
+            return;
+          }
+          
+          var req = reqNumber; //that.getView().getModel("ET_PERS_DATA").getData().REQUISITION_ID;
+          for (var i = 0; i < anexos.length; i++) {
+            
+            if (anexos[i].New === true) {
+              var table = that.getView().byId('tAnexos').getRows();
+              var uploadCollection = table[i].getCells()[1].getItems()[0];
+              var key = table[i].getCells()[0].getSelectedItem().getKey();
+              dados = "";
+              // Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
+              // dados += uploadCollection.getValue() + ";DOA" + ";1234;" + req + ";INSERT" ;
+              dados += 
+                uploadCollection.getValue() + 
+                ";DOA;" + 
+                req + 
+                ";INSERT;" + 
+                key + 
+                ";" + 
+                status + 
+                ";" + 
+                that.getView().getModel("ET_HEADER").getData().PERNR;
                 
                 if (uploadCollection) {
                   uploadCollection.destroyHeaderParameters();
@@ -291,10 +410,8 @@ sap.ui.define([
                   uploadCollection.setSendXHR(true);
                   uploadCollection.setUploadUrl("/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/AnexoSet");
                   uploadCollection.upload();
-                  calledOnce = true;
                 }
               }
-              if(calledOnce) break;
             }
             oDialog.close();
           });
@@ -302,498 +419,388 @@ sap.ui.define([
           jQuery.sap.log.error("Erro Conexão" + oException.message);
           oDialog.close();
         }
+        
       },
-      clearAttachments: function () {
-        oModelAtt = this.getView().getModel("Attachments");
-        oModelDelete = this.getView().getModel("AttDelete");
-        oAttsTable = this.getView().byId('tAnexos').getRows();
-        if(oAttsTable && oAttsTable.length){
-          for (let i = 0; i < oAttsTable.length; i++) {
-            const oAttsRow = oAttsTable[i];
+      getAttachment: function() {
+        var that = this;
+        var path = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/";
+        var oModelData = new sap.ui.model.odata.ODataModel(path); //this.getView().getModel().sServiceUrl);
+        var requisition = that.getView().getModel("ET_GLOBAL_DATA").IM_REQUISITION_ID;
+        var oGlobalData = that.getView().getModel("ET_GLOBAL_DATA");
+        // var oModel = oBindingContext.getObject();
+        
+        var oFilters = [];
+        // oFilters.push(new Filter("Pernr", FilterOperator.EQ, oModel.PERNR));
+        // oFilters.push(new Filter("Data", FilterOperator.EQ, oModel.DATA_INI));
+        // oFilters.push(new Filter("ReqNumber", sap.ui.model.FilterOperator.EQ, "10000000000000142"));
+        
+        if (requisition == '00000000') {
+          return;
+        }
+        var doctype = "DOA";
+        
+        oFilters.push(new Filter("ReqNumber", sap.ui.model.FilterOperator.EQ, requisition));
+        oFilters.push(new Filter("DocType", sap.ui.model.FilterOperator.EQ, doctype));
+        oFilters.push(new Filter("IM_BUKRS", sap.ui.model.FilterOperator.EQ, oGlobalData.IM_BUKRS));
+        
+        oModelData.read("/AnexoSet", {
+          filters: oFilters,
+          async: false,
+          success: function(oData) {
+            var oAttachments = that.getView().getModel("Attachments");
+            oAttachments.setData(null);
+            oAttachments.setData({
+              table: []
+            });
+            for (var i = 0; i < oData.results.length; i++) {
+              var oDataResult = oData.results[i];
+              var oEntry = {};
+              
+              if (that.getView().byId("btnSave").getVisible() === false) {
+                oEntry.statusCampos = false;
+              }
+              
+              oEntry.documentId = oDataResult.DocumentId;
+              oEntry.Filename = oDataResult.Filename;
+              oEntry.Mimetype = oDataResult.Mimetype;
+              oEntry.version = oDataResult.Version;
+              oEntry.Fileid = oDataResult.Fileid;
+              // oEntry.Url = path + "/AnexoSet(Pernr='',Data='" + "20200101" +
+              // 	"',DocumentId='" + oEntry.documentId + "',Version='" + "AA',Fileid='" + oEntry.Fileid + "',DocType='" + doctype +
+              // 	"')/$value";
+              oEntry.Url = path + "/AnexoSet(Pernr='',Data='" + "20200101" +
+              "',DocumentId='" + oEntry.documentId + "',Version='" + "AA',Fileid='" + oEntry.Fileid + "',DocType='" + doctype +
+              "',IM_BUKRS='" +
+              oGlobalData.IM_BUKRS + "')/$value";
+              oEntry.Response = oDataResult.Response;
+              oEntry.TipoAnexo = oDataResult.TipoAnexo;
+              oEntry.New = false;
+              oEntry.Old = true;
+              
+              // oAttachments.table.push(oEntry);
+              
+              oAttachments.getData().table.push(oEntry);
+            }
+            oAttachments.refresh();
             
-            oAttsRow.getCells()[1].getItems()[0].setValue("")
+          },
+          error: function(e) {
+            // MessageBox.error("Erro ao Ler anexos.");
+          }
+        });
+        
+      },
+      onOpenAttachment: function(oEvent) {
+        // var lPath = '';
+        var att = this.getView().getModel("Attachments");
+        var index = oEvent.getSource().getParent().getParent().getIndex();
+        // var urlModel = this.getOwnerComponent().getModel().sServiceUrl;
+        var lPath = att.getData().table[index].Url;
+        
+        if (lPath !== '') {
+          sap.m.URLHelper.redirect(lPath, true);
+        }
+        
+      },
+      fileSizeExceed: function() {
+        MessageBox.error("Tamanho máximo do arquivo excedido! Por favor, insira um arquivo até 1mb");
+        
+      },
+      getFieldsDMS: function(numTela) {
+        var that = this;
+        var oModelData = new sap.ui.model.odata.ODataModel(this.getView().getModel().sServiceUrl);
+        var oBindingContext = this.getView().getBindingContext();
+        
+        var oFilters = [];
+        
+        oFilters = [new sap.ui.model.Filter("REQ_TYPE", sap.ui.model.FilterOperator.EQ, numTela)];
+        
+        oModelData.read("/E_DMS_TYPESet", {
+          filters: oFilters,
+          async: false,
+          success: function(oData) {
+            that.fieldsDMS = oData.results;
+            that.tipos = [];
+            
+            for (var i = 0; that.fieldsDMS.length > i; i++) {
+              if (that.fieldsDMS[i].UI5_FIELD == "") {
+                that.tipos.push({
+                  id: that.fieldsDMS[i].DMS_FIELD,
+                  Name: that.fieldsDMS[i].DMS_DESCR
+                });
+              }
+            }
+            
+          },
+          error: function(e) {
+            MessageBox.error("Erro ao Ler anexos");
+          }
+        });
+      },
+      montaTelaAnexo: function(changedData, numTela) {
+        this.changedData = this.removeDuplicates(changedData);
+        var fields = this.fieldsDMS;
+        var fieldsChanged = [];
+        var anexos = this.getView().getModel("Attachments").getData();
+        var found = false;
+        var obj = {
+          UI5_FIELD: '',
+          DMS_FIELDS: []
+        };
+        
+        if(anexos && anexos.table && anexos.table.length){
+          for (var x = 0; anexos.table.length > x; x++) {
+            if (anexos.table[x].Old == true) {
+              anexos.table[x].DMS_FIELDS = this.tipos;
+            }
           }
         }
-        if(oModelAtt) {
-          oModelAtt.setData({
-            table: []
-          });
-          oModelAtt.refresh();
-        } 
-        if(oModelDelete){
-          oModelDelete.setData({
-            table: []
-          });
-          oModelDelete.refresh();
-        } 
-      },
-      saveAttachment: function(reqNumber, status) {
-        var that = this;
-        var oDialog = that.getView().byId("BusyDialog");
         
-        try {
-          oDialog.open();
-          
-          var that = this;
-          
-          this.deleteAttachment();
-          
-          /**
-          * **************To Fetch CSRF Token******************
-          */
-          // var a = "/Yourservice URL or Metadata URL ";
-          var a = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV";
-          var f = {
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-              "Content-Type": "application/atom+xml",
-              //"Content-Type" : "application/xml",
-              DataServiceVersion: "2.0",
-              "X-CSRF-Token": "Fetch",
-            },
-            requestUri: a,
-            method: "GET"
-          };
-          var oHeaders;
-          var oModel = new sap.ui.model.odata.ODataModel(a, true);
-          var dados = "";
-          sap.ui.getCore().setModel(oModel);
-          OData.request(f, function(data, oSuccess) {
-            
-            var oToken = oSuccess.headers['x-csrf-token'];
-            /**
-            * ValidaÁao para o caso do navegador ser o Firefox/IE *
-            */
-            if (oToken == null) {
-              oToken = oSuccess.headers['X-CSRF-Token'];
-            }
-            // that.getView().byId('tAnexos').getRows()[0].getCells()[1];
-            
-            var anexos = that.getView().getModel("Attachments").getData().table;
-            if (anexos.length == 0) {
-              oDialog.close();
-              return;
-            }
-            
-            var req = reqNumber; //that.getView().getModel("ET_PERS_DATA").getData().REQUISITION_ID;
-            for (var i = 0; i < anexos.length; i++) {
+        if (changedData.length == 0) {
+          this.getView().getModel("Attachments").setData(anexos);
+          return;
+        }
+        
+        // Verifica se o campo alterado tem registro na tabela de DMS
+        for (var i = 0; changedData.length > i; i++) {
+          for (var j = 0; fields.length > j; j++) {
+            if (changedData[i] == fields[j].UI5_FIELD) {
+              found = true;
               
-              if (anexos[i].New === true) {
-                var table = that.getView().byId('tAnexos').getRows();
-                var uploadCollection = table[i].getCells()[1].getItems()[0];
-                var key = table[i].getCells()[0].getSelectedItem().getKey();
-                dados = "";
-                // Nome do arquivo;tipo do arquivo;numero requisição;operação;tipo (característica);status requisição;pernr;
-                // dados += uploadCollection.getValue() + ";DOA" + ";1234;" + req + ";INSERT" ;
-                dados += uploadCollection.getValue() + ";DOA;" + req + ";INSERT;" + key + ";" + status + ";" + that.getView().getModel(
-                  "ET_HEADER").getData().PERNR;
-                  
-                  if (uploadCollection) {
-                    uploadCollection.destroyHeaderParameters();
-                    uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
-                      name: "slug",
-                      value: dados
-                    }));
-                    
-                    uploadCollection.addHeaderParameter(new sap.ui.unified.FileUploaderParameter({
-                      name: "x-csrf-token",
-                      value: oToken
-                    }));
-                    
-                    uploadCollection.setSendXHR(true);
-                    uploadCollection.setUploadUrl("/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/AnexoSet");
-                    uploadCollection.upload();
-                  }
-                }
-              }
-              oDialog.close();
-            });
-          } catch (oException) {
-            jQuery.sap.log.error("Erro Conexão" + oException.message);
-            oDialog.close();
-          }
-          
-        },
-        getAttachment: function() {
-          var that = this;
-          var path = "/sap/opu/odata/sap/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/";
-          var oModelData = new sap.ui.model.odata.ODataModel(path); //this.getView().getModel().sServiceUrl);
-          var requisition = that.getView().getModel("ET_GLOBAL_DATA").IM_REQUISITION_ID;
-          var oGlobalData = that.getView().getModel("ET_GLOBAL_DATA");
-          // var oModel = oBindingContext.getObject();
-          
-          var oFilters = [];
-          // oFilters.push(new Filter("Pernr", FilterOperator.EQ, oModel.PERNR));
-          // oFilters.push(new Filter("Data", FilterOperator.EQ, oModel.DATA_INI));
-          // oFilters.push(new Filter("ReqNumber", sap.ui.model.FilterOperator.EQ, "10000000000000142"));
-          
-          if (requisition == '00000000') {
-            return;
-          }
-          var doctype = "DOA";
-          
-          oFilters.push(new Filter("ReqNumber", sap.ui.model.FilterOperator.EQ, requisition));
-          oFilters.push(new Filter("DocType", sap.ui.model.FilterOperator.EQ, doctype));
-          oFilters.push(new Filter("IM_BUKRS", sap.ui.model.FilterOperator.EQ, oGlobalData.IM_BUKRS));
-          
-          oModelData.read("/AnexoSet", {
-            filters: oFilters,
-            async: false,
-            success: function(oData) {
-              var oAttachments = that.getView().getModel("Attachments");
-              oAttachments.setData(null);
-              oAttachments.setData({
-                table: []
+              obj.UI5_FIELD = fields[j].UI5_FIELD;
+              obj.DMS_FIELDS.push({
+                id: fields[j].DMS_FIELD,
+                Name: fields[j].DMS_DESCR
               });
-              for (var i = 0; i < oData.results.length; i++) {
-                var oDataResult = oData.results[i];
-                var oEntry = {};
-                
-                if (that.getView().byId("btnSave").getVisible() === false) {
-                  oEntry.statusCampos = false;
-                }
-                
-                oEntry.documentId = oDataResult.DocumentId;
-                oEntry.Filename = oDataResult.Filename;
-                oEntry.Mimetype = oDataResult.Mimetype;
-                oEntry.version = oDataResult.Version;
-                oEntry.Fileid = oDataResult.Fileid;
-                // oEntry.Url = path + "/AnexoSet(Pernr='',Data='" + "20200101" +
-                // 	"',DocumentId='" + oEntry.documentId + "',Version='" + "AA',Fileid='" + oEntry.Fileid + "',DocType='" + doctype +
-                // 	"')/$value";
-                oEntry.Url = path + "/AnexoSet(Pernr='',Data='" + "20200101" +
-                "',DocumentId='" + oEntry.documentId + "',Version='" + "AA',Fileid='" + oEntry.Fileid + "',DocType='" + doctype +
-                "',IM_BUKRS='" +
-                oGlobalData.IM_BUKRS + "')/$value";
-                oEntry.Response = oDataResult.Response;
-                oEntry.TipoAnexo = oDataResult.TipoAnexo;
-                oEntry.New = false;
-                oEntry.Old = true;
-                
-                // oAttachments.table.push(oEntry);
-                
-                oAttachments.getData().table.push(oEntry);
-              }
-              oAttachments.refresh();
-              
-            },
-            error: function(e) {
-              // MessageBox.error("Erro ao Ler anexos.");
             }
-          });
-          
-        },
-        onOpenAttachment: function(oEvent) {
-          // var lPath = '';
-          var att = this.getView().getModel("Attachments");
-          var index = oEvent.getSource().getParent().getParent().getIndex();
-          // var urlModel = this.getOwnerComponent().getModel().sServiceUrl;
-          var lPath = att.getData().table[index].Url;
-          
-          if (lPath !== '') {
-            sap.m.URLHelper.redirect(lPath, true);
+            
           }
           
-        },
-        fileSizeExceed: function() {
-          MessageBox.error("Tamanho máximo do arquivo excedido! Por favor, insira um arquivo até 1mb");
+          if (found == true) {
+            fieldsChanged.push(obj);
+          }
           
-        },
-        getFieldsDMS: function(numTela) {
-          var that = this;
-          var oModelData = new sap.ui.model.odata.ODataModel(this.getView().getModel().sServiceUrl);
-          var oBindingContext = this.getView().getBindingContext();
-          
-          var oFilters = [];
-          
-          oFilters = [new sap.ui.model.Filter("REQ_TYPE", sap.ui.model.FilterOperator.EQ, numTela)];
-          
-          oModelData.read("/E_DMS_TYPESet", {
-            filters: oFilters,
-            async: false,
-            success: function(oData) {
-              that.fieldsDMS = oData.results;
-              that.tipos = [];
-              
-              for (var i = 0; that.fieldsDMS.length > i; i++) {
-                if (that.fieldsDMS[i].UI5_FIELD == "") {
-                  that.tipos.push({
-                    id: that.fieldsDMS[i].DMS_FIELD,
-                    Name: that.fieldsDMS[i].DMS_DESCR
-                  });
-                }
-              }
-              
-            },
-            error: function(e) {
-              MessageBox.error("Erro ao Ler anexos");
-            }
-          });
-        },
-        montaTelaAnexo: function(changedData, numTela) {
-          this.changedData = this.removeDuplicates(changedData);
-          var fields = this.fieldsDMS;
-          var fieldsChanged = [];
-          var anexos = this.getView().getModel("Attachments").getData();
-          var found = false;
-          var obj = {
+          obj = {
             UI5_FIELD: '',
             DMS_FIELDS: []
           };
-          
-          if(anexos && anexos.table && anexos.table.length){
-            for (var x = 0; anexos.table.length > x; x++) {
-              if (anexos.table[x].Old == true) {
-                anexos.table[x].DMS_FIELDS = this.tipos;
+          found = false;
+        }
+        
+        found = false;
+        // Com base nos campos alterados monta tabela de anexos automaticamente
+        //if (anexos.table.length > 0) {
+        for (i = 0; fieldsChanged.length > i; i++) {
+          var currentChangedField = fieldsChanged[i];
+          for (var k = 0; currentChangedField.DMS_FIELDS.length > k; k++) {
+            var dmsField = currentChangedField.DMS_FIELDS[k];
+            for (j = 0; anexos.table.length > j; j++) {
+              if (dmsField.id == anexos.table[j].TipoAnexo) {
+                found = true;
               }
             }
           }
           
-          if (changedData.length == 0) {
+          if (found == false) {
+            anexos.table.push({
+              TipoAnexo: currentChangedField.DMS_FIELDS[0].id,
+              New: true,
+              Old: false,
+              DMS_FIELDS: currentChangedField.DMS_FIELDS
+            });
+          }
+          found = false;
+        }
+        
+        //adiciona campo obrigatório para alteração de nome
+        var nomeAlt = false;
+        
+        if (numTela == req_subtype.dados_pessoais) {
+          for (i = 0; changedData.length > i; i++) {
+            if (changedData[i] == "ipFullName") {
+              nomeAlt = true;
+              break;
+            }
+          }
+          
+          if (nomeAlt === true) {
+            found = false;
+            for (i = 0; anexos.table.length > i; i++) {
+              if (anexos.table[i].TipoAnexo == "SITUACAOCADASTRAL") {
+                found = true;
+              }
+            }
+            if (found === false) {
+              anexos.table.push({
+                TipoAnexo: "SITUACAOCADASTRAL",
+                New: true,
+                Old: false,
+                DMS_FIELDS: [{
+                  id: "SITUACAOCADASTRAL",
+                  Name: "Situação Cadastral"
+                }]
+              });
+            }
+          }
+          
+        }
+        
+        // Change model Attachment
+        this.getView().getModel("Attachments").setData(anexos);
+        
+      },
+      onDeleteAttachment: function(oEvent) {
+        var id = oEvent.getSource().getParent().getIndex();
+        
+        var anexos = this.getView().getModel("Attachments").getData();
+        var anexosDelete = this.getView().getModel("AttDelete");
+        
+        if (anexos.table.legnth < 1) {
+          return;
+        }
+        
+        if (!anexosDelete) {
+          anexosDelete = new sap.ui.model.json.JSONModel({
+            table: []
+          });
+          this.getView().setModel(anexosDelete, "AttDelete");
+        }
+        var deletados = anexosDelete.getData();
+        
+        if (anexos.table[id].Old == true) {
+          deletados.table.push(anexos.table[id]);
+        }
+        this.getView().byId('tAnexos').getRows()[id].getCells()[1].getItems()[0].setValue("");
+        anexos.table.splice(id, 1);
+        
+        this.getView().getModel("AttDelete").setData(deletados);
+        this.getView().getModel("Attachments").setData(anexos);
+        
+      },
+      onEditAttachment: function(oEvent) {
+        var id = oEvent.getSource().getParent().getIndex();
+        
+        var anexos = this.getView().getModel("Attachments").getData();
+        var anexosDelete = this.getView().getModel("AttDelete");
+        
+        if (anexos.table.length < 1) {
+          return;
+        }
+        
+        if (!anexosDelete) {
+          anexosDelete = new sap.ui.model.json.JSONModel({
+            table: []
+          });
+          this.getView().setModel(anexosDelete, "AttDelete");
+        }
+        var deletados = anexosDelete.getData();
+        
+        if (anexos.table[id].Old == true) {
+          deletados.table.push(anexos.table[id]);
+        }
+        this.getView().byId('tAnexos').getRows()[id].getCells()[1].getItems()[0].setValue("");
+        // anexos.table.splice(id, 1);
+        anexos.table[id] = {
+          New: true,
+          Old: false,
+          AddManual: true,
+          DMS_FIELDS: this.tipos
+        };
+        this.getView().getModel("AttDelete").setData(deletados);
+        this.getView().getModel("Attachments").setData(anexos);
+        
+      },
+      onAnexoChange: function(oEvent) {
+        //remonta a tela para refletir o tipo de anexo selecionado
+        this.montaTelaAnexo(this.changedData,this.numTela);
+        var id = oEvent.getSource().getParent().getIndex();
+        var anexos = this.getView().getModel("Attachments").getData();
+        
+        for (var i = 0; anexos.table.length > i; i++) {
+          if (id == i) {
+            continue;
+          }
+          
+          if (anexos.table[id].TipoAnexo == anexos.table[i].TipoAnexo) {
+            MessageBox.error("Tipo de anexo selecionado já existente");
+            anexos.table.splice(id, 1);
             this.getView().getModel("Attachments").setData(anexos);
             return;
           }
           
-          // Verifica se o campo alterado tem registro na tabela de DMS
-          for (var i = 0; changedData.length > i; i++) {
-            for (var j = 0; fields.length > j; j++) {
-              if (changedData[i] == fields[j].UI5_FIELD) {
-                found = true;
-                
-                obj.UI5_FIELD = fields[j].UI5_FIELD;
-                obj.DMS_FIELDS.push({
-                  id: fields[j].DMS_FIELD,
-                  Name: fields[j].DMS_DESCR
-                });
-              }
-              
-            }
+        }
+        
+        for (i = 0; anexos.table.length > i; i++) {
+          if (id == i) {
+            continue;
+          }
+          if (anexos.table[i].AddManual == true || anexos.table[i].Old == true) {
+            continue;
+          }
+          
+          for (var j = 0; anexos.table[i].DMS_FIELDS.length > j; j++) {
             
-            if (found == true) {
-              fieldsChanged.push(obj);
-            }
-            
-            obj = {
-              UI5_FIELD: '',
-              DMS_FIELDS: []
-            };
-            found = false;
-          }
-          
-          found = false;
-          // Com base nos campos alterados monta tabela de anexos automaticamente
-          //if (anexos.table.length > 0) {
-          for (i = 0; fieldsChanged.length > i; i++) {
-            var currentChangedField = fieldsChanged[i];
-            for (var k = 0; currentChangedField.DMS_FIELDS.length > k; k++) {
-              var dmsField = currentChangedField.DMS_FIELDS[k];
-              for (j = 0; anexos.table.length > j; j++) {
-                if (dmsField.id == anexos.table[j].TipoAnexo) {
-                  found = true;
-                }
-              }
-            }
-            
-            if (found == false) {
-              anexos.table.push({
-                TipoAnexo: currentChangedField.DMS_FIELDS[0].id,
-                New: true,
-                Old: false,
-                DMS_FIELDS: currentChangedField.DMS_FIELDS
-              });
-            }
-            found = false;
-          }
-          
-          //adiciona campo obrigatório para alteração de nome
-          var nomeAlt = false;
-          
-          if (numTela == req_subtype.dados_pessoais) {
-            for (i = 0; changedData.length > i; i++) {
-              if (changedData[i] == "ipFullName") {
-                nomeAlt = true;
-                break;
-              }
-            }
-            
-            if (nomeAlt === true) {
-              found = false;
-              for (i = 0; anexos.table.length > i; i++) {
-                if (anexos.table[i].TipoAnexo == "SITUACAOCADASTRAL") {
-                  found = true;
-                }
-              }
-              if (found === false) {
-                anexos.table.push({
-                  TipoAnexo: "SITUACAOCADASTRAL",
-                  New: true,
-                  Old: false,
-                  DMS_FIELDS: [{
-                    id: "SITUACAOCADASTRAL",
-                    Name: "Situação Cadastral"
-                  }]
-                });
-              }
-            }
-            
-          }
-          
-          // Change model Attachment
-          this.getView().getModel("Attachments").setData(anexos);
-          
-        },
-        onDeleteAttachment: function(oEvent) {
-          var id = oEvent.getSource().getParent().getIndex();
-          
-          var anexos = this.getView().getModel("Attachments").getData();
-          var anexosDelete = this.getView().getModel("AttDelete");
-          
-          if (anexos.table.legnth < 1) {
-            return;
-          }
-          
-          if (!anexosDelete) {
-            anexosDelete = new sap.ui.model.json.JSONModel({
-              table: []
-            });
-            this.getView().setModel(anexosDelete, "AttDelete");
-          }
-          var deletados = anexosDelete.getData();
-          
-          if (anexos.table[id].Old == true) {
-            deletados.table.push(anexos.table[id]);
-          }
-          this.getView().byId('tAnexos').getRows()[id].getCells()[1].getItems()[0].setValue("");
-          anexos.table.splice(id, 1);
-          
-          this.getView().getModel("AttDelete").setData(deletados);
-          this.getView().getModel("Attachments").setData(anexos);
-          
-        },
-        onEditAttachment: function(oEvent) {
-          var id = oEvent.getSource().getParent().getIndex();
-          
-          var anexos = this.getView().getModel("Attachments").getData();
-          var anexosDelete = this.getView().getModel("AttDelete");
-          
-          if (anexos.table.length < 1) {
-            return;
-          }
-          
-          if (!anexosDelete) {
-            anexosDelete = new sap.ui.model.json.JSONModel({
-              table: []
-            });
-            this.getView().setModel(anexosDelete, "AttDelete");
-          }
-          var deletados = anexosDelete.getData();
-          
-          if (anexos.table[id].Old == true) {
-            deletados.table.push(anexos.table[id]);
-          }
-          this.getView().byId('tAnexos').getRows()[id].getCells()[1].getItems()[0].setValue("");
-          // anexos.table.splice(id, 1);
-          anexos.table[id] = {
-            New: true,
-            Old: false,
-            AddManual: true,
-            DMS_FIELDS: this.tipos
-          };
-          this.getView().getModel("AttDelete").setData(deletados);
-          this.getView().getModel("Attachments").setData(anexos);
-          
-        },
-        onAnexoChange: function(oEvent) {
-          //remonta a tela para refletir o tipo de anexo selecionado
-          this.montaTelaAnexo(this.changedData,this.numTela);
-          var id = oEvent.getSource().getParent().getIndex();
-          var anexos = this.getView().getModel("Attachments").getData();
-          
-          for (var i = 0; anexos.table.length > i; i++) {
-            if (id == i) {
-              continue;
-            }
-            
-            if (anexos.table[id].TipoAnexo == anexos.table[i].TipoAnexo) {
-              MessageBox.error("Tipo de anexo selecionado já existente");
-              anexos.table.splice(id, 1);
+            if (anexos.table[id].TipoAnexo == anexos.table[i].DMS_FIELDS[j].id) {
+              anexos.table.splice(i, 1);
               this.getView().getModel("Attachments").setData(anexos);
-              return;
-            }
-            
-          }
-          
-          for (i = 0; anexos.table.length > i; i++) {
-            if (id == i) {
-              continue;
-            }
-            if (anexos.table[i].AddManual == true || anexos.table[i].Old == true) {
-              continue;
-            }
-            
-            for (var j = 0; anexos.table[i].DMS_FIELDS.length > j; j++) {
-              
-              if (anexos.table[id].TipoAnexo == anexos.table[i].DMS_FIELDS[j].id) {
-                anexos.table.splice(i, 1);
-                this.getView().getModel("Attachments").setData(anexos);
-                break;
-              }
-            }
-            
-          }
-          
-        },
-        
-        deleteAttachment: function() {
-          
-          var path;
-          var oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/");
-          var oModelDel = this.getView().getModel("AttDelete");
-          
-          if (!oModelDel) {
-            return;
-          }
-          
-          var deleted = oModelDel.getData();
-          
-          for (var i = 0; deleted.table.length > i; i++) {
-            path = "AnexoSet(Pernr='',Data='',DocumentId='" + deleted.table[i].documentId + "',Version='',Fileid='" + deleted.table[i].Fileid +
-            "')";
-            
-            oModel.remove(path, {
-              async: false,
-              success: function(oData, oResponse) {},
-              error: function(e) {}
-            });
-          }
-        },
-        
-        removeDuplicates: function(arr) {
-          var clean = [];
-          var cleanLen = 0;
-          var arrLen = arr.length;
-          
-          for (var i = 0; i < arrLen; i++) {
-            var el = arr[i];
-            var duplicate = false;
-            
-            for (var j = 0; j < cleanLen; j++) {
-              if (el !== clean[j]) {
-                continue;
-              }
-              
-              duplicate = true;
               break;
             }
-            
-            if (duplicate) {
+          }
+          
+        }
+        
+      },
+      
+      deleteAttachment: function() {
+        
+        var path;
+        var oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/SAP/ZODHR_SS_MAINTENANCE_CADASTRAL_SRV/");
+        var oModelDel = this.getView().getModel("AttDelete");
+        
+        if (!oModelDel) {
+          return;
+        }
+        
+        var deleted = oModelDel.getData();
+        
+        for (var i = 0; deleted.table.length > i; i++) {
+          path = "AnexoSet(Pernr='',Data='',DocumentId='" + deleted.table[i].documentId + "',Version='',Fileid='" + deleted.table[i].Fileid +
+          "')";
+          
+          oModel.remove(path, {
+            async: false,
+            success: function(oData, oResponse) {},
+            error: function(e) {}
+          });
+        }
+      },
+      
+      removeDuplicates: function(arr) {
+        var clean = [];
+        var cleanLen = 0;
+        var arrLen = arr.length;
+        
+        for (var i = 0; i < arrLen; i++) {
+          var el = arr[i];
+          var duplicate = false;
+          
+          for (var j = 0; j < cleanLen; j++) {
+            if (el !== clean[j]) {
               continue;
             }
             
-            clean[cleanLen++] = el;
+            duplicate = true;
+            break;
           }
           
-          return clean;
+          if (duplicate) {
+            continue;
+          }
+          
+          clean[cleanLen++] = el;
         }
-      });
-    }, true);
+        
+        return clean;
+      }
+    });
+  }, true);
